@@ -1,0 +1,32 @@
+.card {
+  width           : 100%;
+  max-width       : 300px;
+  margin          : 0 auto;
+  border-radius   : 0.5rem;
+  overflow        : hidden;
+  box-shadow      : 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--base-yellow);
+  padding         : 1.5rem;
+  border          : 2px solid var(--base-bright-orange);
+  transition      : transform 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    transform   : scale(1.05);
+    border-color: var(--base-orange);
+  }
+
+  .card__image {
+    width        : 100%;
+    height       : auto;
+    display      : block;
+    border-radius: 0.5rem;
+  }
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  @media (min-width: 768px) {
+    max-width: 400px;
+  }
+}
