@@ -4,7 +4,13 @@ module.exports = {
 		browser: true,
 		es2020: true,
 	},
-	extends: ['airbnb', 'airbnb-typescript', 'airbnb/hooks', 'plugin:prettier/recommended'],
+	extends: [
+		'airbnb',
+		'airbnb-typescript',
+		'airbnb/hooks',
+		'plugin:prettier/recommended',
+		'plugin:storybook/recommended',
+	],
 	ignorePatterns: ['dist', 'vite.config.ts'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
