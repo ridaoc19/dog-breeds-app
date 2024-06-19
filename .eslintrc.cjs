@@ -23,6 +23,25 @@ module.exports = {
 	},
 	plugins: ['react', '@typescript-eslint'],
 	rules: {
+		'react/react-in-jsx-scope': 'off',
 		'no-console': 'warn',
+		'import/no-extraneous-dependencies': [
+			'error',
+			{
+				devDependencies: [
+					'**/*.test.js',
+					'**/*.spec.js',
+					'**/*.test.ts',
+					'**/*.spec.ts',
+					'**/*.test.tsx',
+					'**/*.spec.tsx',
+					'**/.storybook/**',
+					'**/stories/**',
+					'**/*.stories.ts',
+					'**/*.stories.tsx',
+					'**/*.setup.ts',
+				],
+			},
+		],
 	},
 };
