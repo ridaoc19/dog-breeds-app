@@ -1,6 +1,7 @@
-import "./styles/app/app.scss";
+import './styles/app/app.scss';
+
 function App() {
-  return <></>;
+	return null;
 }
 
 export default App;
