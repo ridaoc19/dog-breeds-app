@@ -52,6 +52,18 @@ function PhotoGallery() {
 		setCurrentPage(page);
 	};
 
+	const handleNextPage = () => {
+		if (currentPage < totalPages) {
+			handlePageChange(currentPage + 1);
+		}
+	};
+
+	const handlePreviousPage = () => {
+		if (currentPage > 1) {
+			handlePageChange(currentPage - 1);
+		}
+	};
+
 	return (
 		<div className='photo-gallery' data-testid='photo-gallery'>
 			<div className='photo-gallery__total'>
@@ -79,7 +91,15 @@ function PhotoGallery() {
 			</div>
 			<div className='photo-gallery__pagination'>
 				{images.length > imagesPerPage && (
-					<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+					<Pagination
+						currentIndex={currentPage}
+						paginationTotal={totalPages}
+						disableBack={currentPage === 1}
+						disableNext={currentPage === totalPages}
+						handlePreviousPage={handlePreviousPage}
+						handleNextPage={handleNextPage}
+						handleClickPagination={page => handlePageChange(page)}
+					/>
 				)}
 			</div>
 		</div>

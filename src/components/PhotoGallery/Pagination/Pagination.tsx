@@ -1,43 +1,51 @@
 interface PaginationProps {
-	currentPage: number;
-	totalPages: number;
-	onPageChange: (page: number) => void;
+	handlePreviousPage: () => void;
+	handleNextPage: () => void;
+	handleClickPagination: (selectedValue: number) => void;
+	disableBack: boolean;
+	disableNext: boolean;
+	paginationTotal: number;
+	currentIndex: number;
 }
 
-function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-	const handleNextPage = () => {
-		if (currentPage < totalPages) {
-			onPageChange(currentPage + 1);
-		}
-	};
+function Pagination({
+	handlePreviousPage,
+	handleNextPage,
+	handleClickPagination,
+	disableBack,
+	disableNext,
+	paginationTotal,
+	currentIndex,
+}: PaginationProps) {
+	const visibleRange = 5;
 
-	const handlePreviousPage = () => {
-		if (currentPage > 1) {
-			onPageChange(currentPage - 1);
-		}
-	};
-
-	const handlePageNumberClick = (pageNumber: number) => {
-		onPageChange(pageNumber);
-	};
+	const startPage = Math.max(1, currentIndex - Math.floor(visibleRange / 2));
+	const endPage = Math.min(paginationTotal, startPage + visibleRange - 1);
 
 	return (
 		<div className='pagination'>
-			<button type='button' onClick={handlePreviousPage} disabled={currentPage === 1}>
-				Anterior
+			<button type='button' className='pagination__button' onClick={handlePreviousPage} disabled={disableBack}>
+				&lt;
 			</button>
-			{Array.from({ length: totalPages }, (_, index) => index + 1).map(pageNumber => (
-				<button
-					type='button'
-					key={pageNumber}
-					onClick={() => handlePageNumberClick(pageNumber)}
-					className={pageNumber === currentPage ? 'active' : ''}
-				>
-					{pageNumber}
-				</button>
-			))}
-			<button type='button' onClick={handleNextPage} disabled={currentPage === totalPages}>
-				Siguiente
+
+			<div className='pagination__numbers'>
+				{Array.from({ length: endPage - startPage + 1 }, (_, index) => {
+					const pageNumber = startPage + index;
+					return (
+						<button
+							type='button'
+							key={pageNumber}
+							className={`pagination__numbers-item ${pageNumber === currentIndex ? 'pagination__numbers-selected' : ''}`}
+							onClick={() => handleClickPagination(pageNumber)}
+						>
+							{pageNumber}
+						</button>
+					);
+				})}
+			</div>
+
+			<button type='button' className='pagination__button' onClick={handleNextPage} disabled={disableNext}>
+				&gt;
 			</button>
 		</div>
 	);
