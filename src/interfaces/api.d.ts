@@ -1,4 +1,4 @@
-interface ApiDogsListAll {
+interface FetchBreeds {
 	message: {
 		affenpinscher: any[];
 		african: any[];
@@ -111,11 +111,11 @@ interface ApiDogsListAll {
 	status: string;
 }
 
-interface ApiBreedList {
+interface FetchSubBreeds {
 	message: string[];
 	status: string;
 }
-interface ApiDogsImages {
+interface FetchImages {
 	message: string[];
 	status: string;
 }
