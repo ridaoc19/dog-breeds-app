@@ -1,7 +1,13 @@
+import Layout from './components/layout/Layout';
+import Home from './pages/Home/Home';
 import './styles/app/app.scss';
 
 function App() {
-	return null;
+	return (
+		<Layout>
+			<Home />
+		</Layout>
+	);
 }
 
 export default App;
