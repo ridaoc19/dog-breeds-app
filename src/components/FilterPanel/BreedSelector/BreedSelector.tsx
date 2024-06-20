@@ -1,9 +1,19 @@
-interface BreedSelectorProps {
-	breeds: string[];
-	setSelectedBreed: (breed: string) => void;
-}
+import { useEffect, useState } from 'react';
+import { getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 
-function BreedSelector({ breeds, setSelectedBreed }: BreedSelectorProps) {
+function BreedSelector() {
+	const [search, setSearch] = useState<string>('');
+	const dispatch = useAppDispatch();
+	const breeds = useAppSelector(selectBreeds);
+
+	useEffect(() => {
+		if (breeds.includes(search)) {
+			dispatch(selectedBreed(search));
+			dispatch(getSubBreeds(search));
+		}
+	}, [breeds, dispatch, search]);
+
 	return (
 		<div className='breed-selector' data-testid='breed-selector'>
 			<label htmlFor='breedSelect' className='breed-selector__label'>
@@ -11,7 +21,9 @@ function BreedSelector({ breeds, setSelectedBreed }: BreedSelectorProps) {
 				<input
 					id='breedSelect'
 					list='breeds'
-					onChange={e => setSelectedBreed(e.target.value)}
+					onChange={e => {
+						setSearch(e.target.value);
+					}}
 					className='breed-selector__input'
 				/>
 				<datalist id='breeds'>

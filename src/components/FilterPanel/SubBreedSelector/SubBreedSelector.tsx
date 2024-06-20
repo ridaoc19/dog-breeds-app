@@ -1,16 +1,17 @@
-interface SubBreedSelectorProps {
-	subBreeds: string[];
-	setSelectedSubBreed: (subBreed: string) => void;
-}
+import { selectedSubBreed, selectSubBreeds } from '../../../redux/breedsSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 
-function SubBreedSelector({ subBreeds, setSelectedSubBreed }: SubBreedSelectorProps) {
+function SubBreedSelector() {
+	const dispatch = useAppDispatch();
+	const subBreeds = useAppSelector(selectSubBreeds);
+
 	return (
 		<div className='sub-breed-selector' data-testid='sub-breed-selector'>
 			<label htmlFor='subBreedSelect'>
 				Select a sub-breed:
 				<select
 					id='subBreedSelect'
-					onChange={e => setSelectedSubBreed(e.target.value)}
+					onChange={e => dispatch(selectedSubBreed(e.target.value))}
 					className='sub-breed-selector__select'
 				>
 					<option value='' disabled selected>

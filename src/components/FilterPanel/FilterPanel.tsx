@@ -2,31 +2,17 @@ import BreedSelector from './BreedSelector/BreedSelector';
 import ImageCountSelector from './ImageCountSelector/ImageCountSelector';
 import SubBreedSelector from './SubBreedSelector/SubBreedSelector';
 
-interface FilterPanelProps {
-	breeds: string[];
-	subBreeds: string[];
-	setSelectedBreed: (breed: string) => void;
-	setSelectedSubBreed: (subBreed: string) => void;
-	setImageCount: (count: number | 'all') => void;
-}
-
-export default function FilterPanel({
-	breeds,
-	subBreeds,
-	setSelectedBreed,
-	setSelectedSubBreed,
-	setImageCount,
-}: FilterPanelProps) {
+export default function FilterPanel() {
 	return (
 		<div className='filter-panel'>
 			<div className='filter-panel__children filter-panel__breed-selector'>
-				<BreedSelector breeds={breeds} setSelectedBreed={setSelectedBreed} />
+				<BreedSelector />
 			</div>
 			<div className='filter-panel__children filter-panel__sub-breed-selector'>
-				<SubBreedSelector subBreeds={subBreeds} setSelectedSubBreed={setSelectedSubBreed} />
+				<SubBreedSelector />
 			</div>
 			<div className='filter-panel__children filter-panel__image-count-selector'>
-				<ImageCountSelector setImageCount={setImageCount} />
+				<ImageCountSelector />
 			</div>
 		</div>
 	);
