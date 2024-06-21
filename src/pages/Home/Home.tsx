@@ -11,7 +11,7 @@ function Home() {
 	}, [dispatch]);
 
 	return (
-		<div>
+		<div className='home'>
 			<FilterPanel />
 			<PhotoGallery />
 		</div>

@@ -7,10 +7,12 @@ import {
 	selectImages,
 	selectSelectedBreed,
 	selectSelectedSubBreed,
+	selectStatus,
 } from '../../redux/breedsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Card from '../Card/Card';
 import Pagination from './Pagination/Pagination';
+import Loading from '../Loading/Loading';
 
 function PhotoGallery() {
 	const dispatch = useAppDispatch();
@@ -19,6 +21,7 @@ function PhotoGallery() {
 	const selectedImageCount = useAppSelector(selectImageCount);
 	const images = useAppSelector(selectImages);
 	const imageRandom = useAppSelector(selectImageRandom);
+	const { isLoading } = useAppSelector(selectStatus);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const imagesPerPage = 10;
@@ -79,7 +82,10 @@ function PhotoGallery() {
 				)}
 			</div>
 			<div className='photo-gallery__cards'>
-				{images.length === 0 ? (
+				{/* eslint-disable-next-line no-nested-ternary */}
+				{isLoading ? (
+					<Loading />
+				) : images.length === 0 ? (
 					<div className='photo-gallery__cards-image'>
 						<img src={imageRandom} alt={imageRandom} />
 					</div>

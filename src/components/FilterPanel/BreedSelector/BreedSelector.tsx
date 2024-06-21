@@ -17,7 +17,7 @@ function BreedSelector() {
 	return (
 		<div className='breed-selector' data-testid='breed-selector'>
 			<label htmlFor='breedSelect' className='breed-selector__label'>
-				Select a breed:
+				Seleccione o busca una raza:
 				<input
 					id='breedSelect'
 					list='breeds'
