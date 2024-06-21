@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import clean from '../../../assets/clean.svg';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { clearState, getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
+import { clearState, getSubBreeds, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');
 	const dispatch = useAppDispatch();
-	const breeds = useAppSelector(selectBreeds);
+	const { breeds } = useAppSelector(selectBreedsState);
 
 	useEffect(() => {
 		if (breeds.includes(search)) {
-			dispatch(selectedBreed(search));
+			dispatch(postSelectedBreed(search));
 			dispatch(getSubBreeds(search));
 		}
 	}, [breeds, dispatch, search]);

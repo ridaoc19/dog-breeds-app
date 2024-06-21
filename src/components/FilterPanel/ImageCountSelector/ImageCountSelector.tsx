@@ -1,18 +1,19 @@
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectedImageCount, selectImageCount } from '../../../redux/breedsSlice';
+import { postSelectedImageCount, selectBreedsState } from '../../../redux/breedsSlice';
 
 function ImageCountSelector() {
 	const dispatch = useAppDispatch();
-	const imagesCount = useAppSelector(selectImageCount);
+	const { selectedImageCount } = useAppSelector(selectBreedsState);
+
 	return (
 		<div className='image-count-selector'>
 			<label htmlFor='imageCount'>
 				Numero de imágenes:
 				<select
 					id='imageCount'
-					onChange={e => dispatch(selectedImageCount(Number(e.target.value)))}
-					defaultValue={imagesCount}
+					onChange={e => dispatch(postSelectedImageCount(Number(e.target.value)))}
+					defaultValue={selectedImageCount}
 					className='image-count-selector__select'
 				>
 					<option value={10}>10</option>
