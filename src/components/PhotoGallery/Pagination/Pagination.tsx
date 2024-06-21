@@ -23,7 +23,7 @@ function Pagination({
 	const endPage = Math.min(paginationTotal, startPage + visibleRange - 1);
 
 	return (
-		<div className='pagination'>
+		<div className='pagination' data-testid='pagination'>
 			<button type='button' className='pagination__button' onClick={handlePreviousPage} disabled={disableBack}>
 				&lt;
 			</button>

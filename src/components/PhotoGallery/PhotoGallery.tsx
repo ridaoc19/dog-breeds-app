@@ -86,7 +86,7 @@ function PhotoGallery() {
 				{isLoading ? (
 					<Loading />
 				) : images.length === 0 ? (
-					<div className='photo-gallery__cards-image'>
+					<div className='photo-gallery__cards-image' data-testid='cards-image'>
 						<img src={imageRandom} alt={imageRandom} />
 					</div>
 				) : (

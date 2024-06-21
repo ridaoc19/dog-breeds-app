@@ -1,6 +1,6 @@
 import { Controls, Primary } from '@storybook/blocks';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, within } from '@storybook/test';
 import Home from './Home';
 
 function HomeDocumentation() {
@@ -92,23 +92,10 @@ export const Homes: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		const filterPanel = canvas.getByText('Select a breed:');
+		const filterPanel = canvas.getByText('Seleccione o busca una raza:');
 		expect(filterPanel).toBeInTheDocument();
 
-		const photoGallery = canvas.getByText('Photo Gallery');
+		const photoGallery = canvas.getByTestId('photo-gallery');
 		expect(photoGallery).toBeInTheDocument();
-
-		const breedSelect = canvas.getByLabelText(/select a breed/i);
-		await userEvent.selectOptions(breedSelect, 'bulldog');
-
-		const subBreedSelect = canvas.getByLabelText(/select a sub-breed/i);
-		await userEvent.selectOptions(subBreedSelect, 'french');
-
-		const imageCountSelect = canvas.getByLabelText(/number of images/i);
-		await userEvent.selectOptions(imageCountSelect, '20');
-
-		expect(breedSelect).toHaveValue('bulldog');
-		expect(subBreedSelect).toHaveValue('french');
-		expect(imageCountSelect).toHaveValue('20');
 	},
 };

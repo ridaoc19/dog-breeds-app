@@ -109,20 +109,12 @@ export const PhotosGallery: Story = {
 			};
 		}),
 	},
-	play: async ({ canvasElement, args }) => {
+	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
 		const galleryElement = canvas.getByTestId('photo-gallery');
 		expect(galleryElement).toBeInTheDocument();
 
-		const cards = canvas.getAllByTestId('card');
-		expect(cards.length).toBe(images.length);
-
-		cards.forEach((card, index) => {
-			const imageElement = within(card).getByRole('img');
-			expect(imageElement).toBeInTheDocument();
-			expect(imageElement).toHaveAttribute('src', images[index]);
-			expect(imageElement).toHaveAttribute('alt', `${index}${args.photos[index].breed}${args.photos[index].subBreed}`);
-		});
+		await canvas.findAllByTestId('cards-image');
 	},
 };

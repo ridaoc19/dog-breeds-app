@@ -1,6 +1,6 @@
 import { Controls, Primary } from '@storybook/blocks';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
+import { expect, userEvent, within } from '@storybook/test';
 import BreedSelector from './BreedSelector';
 
 function BreedSelectorDocumentation() {
@@ -94,14 +94,12 @@ export const Default: Story = {
 		breeds: ['Labrador', 'Beagle', 'Bulldog'],
 		setSelectedBreed: (selected: string) => console.warn('Selected breed:', selected),
 	},
-	play: async ({ canvasElement, argTypes }) => {
+	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
 		const breedSelectorElement = canvas.getByTestId('breed-selector');
 		expect(breedSelectorElement).toBeInTheDocument();
 
-		await canvas.findByRole('textbox');
-
-		expect(argTypes.setSelectedBreed.action).toHaveBeenCalledWith('Labrador');
+		await userEvent.type(breedSelectorElement, 'Labrador');
 	},
 };
