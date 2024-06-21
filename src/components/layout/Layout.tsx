@@ -3,7 +3,7 @@ import Navbar from './Navbar/Navbar';
 
 function Layout({ children }: { children: ReactNode }) {
 	return (
-		<div className={`layout'}`} data-testid='layout'>
+		<div className='layout' data-testid='layout'>
 			<div className='layout__navbar'>
 				<Navbar />
 			</div>
