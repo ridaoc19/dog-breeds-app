@@ -1,45 +1,45 @@
 .pagination {
-  display        : flex;
-  justify-content: center;
-  align-items    : center;
-  margin-top     : 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
 
-  &__button {
-    margin          : 0 5px;
-    padding         : 5px 10px;
-    border          : none;
-    background-color: var(--base-yellow);
-    color           : var(--base-orange);
-    border          : 1px solid var(--base-orange);
-    cursor          : pointer;
-    border-radius   : 0.3rem;
-    padding         : 0.5rem 1rem;
+	&__button {
+		margin: 0 5px;
+		padding: 5px 10px;
+		border: none;
+		background-color: var(--base-yellow);
+		color: var(--base-orange);
+		border: 1px solid var(--base-orange);
+		cursor: pointer;
+		border-radius: 0.3rem;
+		padding: 0.5rem 1rem;
 
-    &:disabled {
-      background-color: var(--neutral-light);
-      border          : 1px solid var(--base-border);
-      cursor          : not-allowed;
-    }
-  }
+		&:disabled {
+			background-color: var(--neutral-light);
+			border: 1px solid var(--base-border);
+			cursor: not-allowed;
+		}
+	}
 
-  &__numbers {
-    display    : flex;
-    align-items: center;
+	&__numbers {
+		display: flex;
+		align-items: center;
 
-    &-item {
-      margin          : 0 2px;
-      padding         : 5px 10px;
-      border          : none;
-      background-color: var(--base-yellow-light);
-      border          : 1px solid var(--base-bright-orange);
-      cursor          : pointer;
-      border-radius   : 0.3rem;
-      padding         : 0.5rem 1rem;
-    }
+		&-item {
+			margin: 0 2px;
+			padding: 5px 10px;
+			border: none;
+			background-color: var(--base-yellow-light);
+			border: 1px solid var(--base-bright-orange);
+			cursor: pointer;
+			border-radius: 0.3rem;
+			padding: 0.5rem 1rem;
+		}
 
-    &-selected {
-      background-color: var(--base-orange);
-      color           : var(--base-light);
-    }
-  }
+		&-selected {
+			background-color: var(--base-orange);
+			color: var(--base-light);
+		}
+	}
 }

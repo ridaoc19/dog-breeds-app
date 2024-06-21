@@ -3,17 +3,16 @@
 	flex-direction: column;
 
 	&__select {
-    width        : 100%;
-    padding      : 0.5rem;
-    border       : 1px solid var(--base-border);
-    border-radius: 4px;
-    box-sizing   : border-box;
-  }
+		width: 100%;
+		padding: 0.5rem;
+		border: 1px solid var(--base-border);
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
 
-
-  &__select:focus {
-    outline     : none;
-    border-color: var(--base-orange);
-    box-shadow  : 0 0 4px rgba(0, 3, 7, 0.386);
-  }
+	&__select:focus {
+		outline: none;
+		border-color: var(--base-orange);
+		box-shadow: 0 0 4px rgba(0, 3, 7, 0.386);
+	}
 }
