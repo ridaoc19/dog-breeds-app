@@ -54,6 +54,7 @@ export const fetchImagesRandom = async () => {
 	}
 };
 
+// Esta información la utilizo en Storybook
 export const all = [
 	'affenpinscher',
 	'african',
