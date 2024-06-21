@@ -38,6 +38,11 @@ export const breedsSlice = createAppSlice({
 	name: 'breeds',
 	initialState,
 	reducers: create => ({
+		clearState: create.reducer(state => {
+			state.selectedBreed = '';
+			state.selectedSubBreed = '';
+			state.images = [];
+		}),
 		selectedBreed: create.reducer((state, action: PayloadAction<string>) => {
 			state.selectedBreed = action.payload;
 			state.selectedSubBreed = '';
@@ -131,6 +136,7 @@ export const {
 	selectedBreed,
 	selectedSubBreed,
 	getBreedImages,
+	clearState,
 } = breedsSlice.actions;
 export const selectBreeds = (state: RootState) => state.breeds.breeds;
 export const selectSubBreeds = (state: RootState) => state.breeds.subBreeds;

@@ -1,6 +1,6 @@
 .breed-selector {
-  display       : flex;
-  flex-direction: column;
+  display          : flex;
+  // flex-direction: column;
 
   &__input {
     width        : 100%;
@@ -15,5 +15,10 @@
     outline     : none;
     border-color: var(--base-orange);
     box-shadow  : 0 0 4px rgba(0, 3, 7, 0.386);
+  }
+
+  &__button {
+    height    : 33px;
+    align-self: flex-end;
   }
 }

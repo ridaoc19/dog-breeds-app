@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
+import { clearState, getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import clean from '../../../assets/clean.svg';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');
@@ -21,6 +22,7 @@ function BreedSelector() {
 				<input
 					id='breedSelect'
 					list='breeds'
+					value={search}
 					onChange={e => {
 						setSearch(e.target.value);
 					}}
@@ -34,6 +36,16 @@ function BreedSelector() {
 					))}
 				</datalist>
 			</label>
+			<button
+				type='button'
+				className='breed-selector__button'
+				onClick={() => {
+					setSearch('');
+					dispatch(clearState());
+				}}
+			>
+				<img src={clean} alt='clean' />
+			</button>
 		</div>
 	);
 }
