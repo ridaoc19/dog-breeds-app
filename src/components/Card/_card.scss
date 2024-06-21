@@ -1,0 +1,34 @@
+.card {
+	width: 100%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	background-color: var(--base-yellow);
+	border: 2px solid var(--base-bright-orange);
+	transition:
+		transform 0.3s ease,
+		border-color 0.3s ease;
+	border-radius: 0.5rem;
+
+	&:hover {
+		transform: scale(1.01);
+		border-color: var(--base-orange);
+	}
+
+	.card__image {
+		padding: 1.5rem;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		border-radius: 0.5rem;
+		box-sizing: border-box;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 0.5rem;
+		}
+	}
+}
