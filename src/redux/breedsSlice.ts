@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, fetchSubBreeds } from '../services/api';
-import { createAppSlice } from './createAppSlice';
 import type { RootState } from './store';
+import createAppSlice from './createAppSlice';
 
 export interface InitialState {
 	breeds: string[];
@@ -33,7 +34,6 @@ const initialState: InitialState = {
 	},
 };
 
-/* eslint-disable no-param-reassign */
 export const breedsSlice = createAppSlice({
 	name: 'breeds',
 	initialState,

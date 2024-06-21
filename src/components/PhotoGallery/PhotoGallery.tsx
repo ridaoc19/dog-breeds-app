@@ -82,18 +82,17 @@ function PhotoGallery() {
 				)}
 			</div>
 			<div className='photo-gallery__cards'>
-				{/* eslint-disable-next-line no-nested-ternary */}
-				{isLoading ? (
-					<Loading />
-				) : images.length === 0 ? (
+				{isLoading && <Loading />}
+				{!isLoading && images.length === 0 && (
 					<div className='photo-gallery__cards-image' data-testid='cards-image'>
 						<img src={imageRandom} alt={imageRandom} />
 					</div>
-				) : (
+				)}
+				{!isLoading &&
+					images.length > 0 &&
 					currentImages.map((image, index) => (
 						<Card key={`${index.toString()}-${selectedBreed}`} image={image} altText={`${index}${selectedBreed}`} />
-					))
-				)}
+					))}
 			</div>
 			<div className='photo-gallery__pagination'>
 				{images.length > imagesPerPage && (
