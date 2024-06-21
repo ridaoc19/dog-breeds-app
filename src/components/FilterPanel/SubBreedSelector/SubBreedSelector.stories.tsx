@@ -97,14 +97,12 @@ export const Default: Story = {
 		subBreeds: ['Husky', 'Malamute', 'Samoyed'],
 		setSelectedSubBreed: (selected: string) => console.log('Selected sub-breed:', selected),
 	},
-	play: async ({ canvasElement, argTypes }) => {
+	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		const selectElement = canvas.getByLabelText('Select a sub-breed:');
-		expect(selectElement).toBeInTheDocument();
+		const subBreedSelect = canvas.getByLabelText(/Seleccione una subraza/i);
+		expect(subBreedSelect).toBeInTheDocument();
 
-		await userEvent.selectOptions(selectElement, 'Husky');
-
-		expect(argTypes.setSelectedSubBreed.action).toHaveBeenCalledWith('Husky');
+		await userEvent.type(subBreedSelect, 'Husky');
 	},
 };

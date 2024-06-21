@@ -7,7 +7,7 @@ function ImageCountSelector() {
 	return (
 		<div className='image-count-selector'>
 			<label htmlFor='imageCount'>
-				Number of images:
+				Numero de imágenes:
 				<select
 					id='imageCount'
 					onChange={e => dispatch(selectedImageCount(Number(e.target.value)))}

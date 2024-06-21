@@ -44,6 +44,16 @@ export const fetchImages = async ({ breed, subBreed, imageCount }: FetchImagesPr
 	}
 };
 
+export const fetchImagesRandom = async () => {
+	try {
+		const response = await fetch(`https://dog.ceo/api/breeds/image/random`);
+		const data: FetchImagesRandom = await response.json();
+		return data.message;
+	} catch (err) {
+		throw new Error('Failed to load images. Please try again.');
+	}
+};
+
 export const all = [
 	'affenpinscher',
 	'african',

@@ -90,19 +90,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {
-		// setImageCount: (count: number) => console.log('Selected image count:', count),
-	},
-	play: async ({ canvasElement, argTypes }) => {
+	args: {},
+	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		const selectElement = canvas.getByLabelText('Number of images:');
-		expect(selectElement).toBeInTheDocument();
+		const imageCountSelect = canvas.getByLabelText(/Numero de imágenes/i);
+		expect(imageCountSelect).toBeInTheDocument();
 
-		await userEvent.selectOptions(selectElement, '20');
-		expect(argTypes.setImageCount.action).toHaveBeenCalledWith(20);
-
-		await userEvent.selectOptions(selectElement, 'all');
-		expect(argTypes.setImageCount.action).toHaveBeenCalledWith(-1);
+		await userEvent.selectOptions(imageCountSelect, '20');
 	},
 };

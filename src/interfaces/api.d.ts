@@ -119,3 +119,8 @@ interface FetchImages {
 	message: string[];
 	status: string;
 }
+
+interface FetchImagesRandom {
+	message: string;
+	status: string;
+}

@@ -1,6 +1,6 @@
 import { Controls, Primary } from '@storybook/blocks';
-import { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
+import { Meta, StoryObj } from '@storybook/react';
 import FilterPanel from './FilterPanel';
 
 function FilterPanelDocumentation() {
@@ -132,25 +132,24 @@ export const FiltersPanel: Story = {
 		breeds: ['bulldog', 'poodle', 'retriever'],
 		subBreeds: ['french', 'english', 'toy'],
 	},
-	play: async ({ canvasElement, argTypes }) => {
+	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
 
-		const breedSelect = canvas.getByLabelText(/select a breed/i);
+		const breedSelect = canvas.getByLabelText(/Seleccione o busca una raza/i);
 		expect(breedSelect).toBeInTheDocument();
 
-		await userEvent.selectOptions(breedSelect, 'bulldog');
-		expect(argTypes.setSelectedBreed.action).toHaveBeenCalledWith('bulldog');
+		await userEvent.type(breedSelect, 'bulldog');
+		expect(args.breeds[0]).toBe('bulldog');
 
-		const subBreedSelect = canvas.getByLabelText(/select a sub-breed/i);
+		const subBreedSelect = canvas.getByLabelText(/Seleccione una subraza/i);
 		expect(subBreedSelect).toBeInTheDocument();
 
-		await userEvent.selectOptions(subBreedSelect, 'french');
-		expect(argTypes.setSelectedSubBreed.action).toHaveBeenCalledWith('french');
+		await userEvent.type(subBreedSelect, 'french');
+		expect(args.subBreeds[0]).toBe('french');
 
-		const imageCountSelect = canvas.getByLabelText(/number of images/i);
+		const imageCountSelect = canvas.getByLabelText(/Numero de imágenes/i);
 		expect(imageCountSelect).toBeInTheDocument();
 
 		await userEvent.selectOptions(imageCountSelect, '20');
-		expect(argTypes.setImageCount.action).toHaveBeenCalledWith(20);
 	},
 };

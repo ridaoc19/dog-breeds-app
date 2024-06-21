@@ -1,12 +1,14 @@
+/* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { fetchBreeds, fetchImages, FetchImagesProps, fetchSubBreeds } from '../services/api';
-import { createAppSlice } from './createAppSlice';
+import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, fetchSubBreeds } from '../services/api';
 import type { RootState } from './store';
+import createAppSlice from './createAppSlice';
 
 export interface InitialState {
 	breeds: string[];
 	subBreeds: string[];
 	images: string[];
+	imageRandom: string;
 	selectedBreed: string;
 	selectedSubBreed: string;
 	selectedImageCount: number;
@@ -21,6 +23,7 @@ const initialState: InitialState = {
 	breeds: [],
 	subBreeds: [],
 	images: [],
+	imageRandom: '',
 	selectedImageCount: 0,
 	selectedBreed: '',
 	selectedSubBreed: '',
@@ -31,11 +34,15 @@ const initialState: InitialState = {
 	},
 };
 
-/* eslint-disable no-param-reassign */
 export const breedsSlice = createAppSlice({
 	name: 'breeds',
 	initialState,
 	reducers: create => ({
+		clearState: create.reducer(state => {
+			state.selectedBreed = '';
+			state.selectedSubBreed = '';
+			state.images = [];
+		}),
 		selectedBreed: create.reducer((state, action: PayloadAction<string>) => {
 			state.selectedBreed = action.payload;
 			state.selectedSubBreed = '';
@@ -100,14 +107,41 @@ export const breedsSlice = createAppSlice({
 				},
 			}
 		),
+		getBreedImageRandom: create.asyncThunk(
+			async () => {
+				const response = await fetchImagesRandom();
+				return response;
+			},
+			{
+				pending: state => {
+					state.status.isLoading = true;
+				},
+				fulfilled: (state, action) => {
+					state.status.isLoading = false;
+					state.imageRandom = action.payload;
+				},
+				rejected: state => {
+					state.status.isError = true;
+				},
+			}
+		),
 	}),
 });
 
-export const { getBreeds, getSubBreeds, selectedImageCount, selectedBreed, selectedSubBreed, getBreedImages } =
-	breedsSlice.actions;
+export const {
+	getBreedImageRandom,
+	getBreeds,
+	getSubBreeds,
+	selectedImageCount,
+	selectedBreed,
+	selectedSubBreed,
+	getBreedImages,
+	clearState,
+} = breedsSlice.actions;
 export const selectBreeds = (state: RootState) => state.breeds.breeds;
 export const selectSubBreeds = (state: RootState) => state.breeds.subBreeds;
 export const selectImages = (state: RootState) => state.breeds.images;
+export const selectImageRandom = (state: RootState) => state.breeds.imageRandom;
 
 export const selectSelectedBreed = (state: RootState) => state.breeds.selectedBreed;
 export const selectSelectedSubBreed = (state: RootState) => state.breeds.selectedSubBreed;

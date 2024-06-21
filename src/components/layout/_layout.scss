@@ -1,27 +1,26 @@
 @import './Navbar/navbar';
 
 .layout {
-	min-height        : 100vh;
-	max-width         : 100vw;
-	display           : grid;
+	min-height: 100vh;
+	max-width: 100vw;
+	display: grid;
 	grid-template-rows: min-content 1fr;
 
-
 	&__navbar {
-		width   : 100%;
+		width: 100%;
 		position: fixed;
-		top     : 0;
-		left    : 0;
-		z-index : 1000;
-		height  : 79px;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		height: 79px;
 	}
 
 	&__children {
-		height     : 100%;
-		width      : 100%;
-		max-width  : 100vw;
-		margin     : 0 auto;
-		display    : grid;
+		height: 100%;
+		width: 100%;
+		max-width: 100vw;
+		margin: 0 auto;
+		display: grid;
 		padding-top: 79px;
 
 		@media (min-width: 1300px) {
