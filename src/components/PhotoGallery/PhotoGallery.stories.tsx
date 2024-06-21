@@ -2,7 +2,7 @@ import { Controls, Primary } from '@storybook/blocks';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 import PhotoGallery from './PhotoGallery';
-import { images } from '../../services/api';
+import { images } from '../../../.storybook/data';
 
 function PhotoGalleryDocumentation() {
 	return (
