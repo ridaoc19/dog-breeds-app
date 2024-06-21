@@ -35,6 +35,7 @@ function PhotoGallery() {
 
 	useEffect(() => {
 		if (selectedBreed) {
+			setCurrentPage(1);
 			dispatch(
 				getBreedImages({
 					breed: selectedBreed,
