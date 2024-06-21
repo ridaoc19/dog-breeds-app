@@ -1,5 +1,6 @@
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
 import { selectedImageCount, selectImageCount } from '../../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 
 function ImageCountSelector() {
 	const dispatch = useAppDispatch();

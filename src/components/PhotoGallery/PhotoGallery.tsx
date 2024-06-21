@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import {
 	getBreedImageRandom,
 	getBreedImages,
@@ -9,10 +11,9 @@ import {
 	selectSelectedSubBreed,
 	selectStatus,
 } from '../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Card from '../Card/Card';
-import Pagination from './Pagination/Pagination';
 import Loading from '../Loading/Loading';
+import Pagination from './Pagination/Pagination';
 
 function PhotoGallery() {
 	const dispatch = useAppDispatch();

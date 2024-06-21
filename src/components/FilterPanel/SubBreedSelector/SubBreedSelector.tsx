@@ -1,5 +1,6 @@
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
 import { selectedSubBreed, selectSelectedSubBreed, selectSubBreeds } from '../../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 
 function SubBreedSelector() {
 	const dispatch = useAppDispatch();

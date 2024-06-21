@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { clearState, getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import clean from '../../../assets/clean.svg';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { clearState, getSubBreeds, selectBreeds, selectedBreed } from '../../../redux/breedsSlice';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');

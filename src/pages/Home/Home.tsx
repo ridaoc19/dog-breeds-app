@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { getBreeds, selectBreeds } from '../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import PhotoGallery from '../../components/PhotoGallery/PhotoGallery';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import { getBreeds, selectBreeds } from '../../redux/breedsSlice';
 
 function Home() {
 	const dispatch = useAppDispatch();
