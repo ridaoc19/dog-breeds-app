@@ -14,12 +14,6 @@ En esta prueba técnica, he buscado utilizar una amplia gama de herramientas aso
 >
 > Toda la aplicación se encuentra documentada componente por componente.
 
-> **Tutorial:**
->
-> Para ver la respuesta a la solución en detalle puede ingresar a esta pagina, ella tiene una tabla de contenido, en el cual puede redirigirse a la sección que desee
->
-> - **Detalle Prueba Técnica:** [https://client.ridaoc.es/](https://client.ridaoc.es/)
-
 > **Deploy:**
 >
 > Tanto la aplicación como las historias y documentación de componentes se encuentran desplegadas en AWS en el servicio Lightsail. Puede ver:
