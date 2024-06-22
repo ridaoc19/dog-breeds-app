@@ -7,7 +7,6 @@
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 1rem;
 	max-width: 100%;
-	overflow: hidden;
 
 	&__children {
 		width: 100%;
