@@ -1,10 +1,10 @@
-import { selectedSubBreed, selectSelectedSubBreed, selectSubBreeds } from '../../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { postSelectedSubBreed, selectBreedsState } from '../../../redux/breedsSlice';
 
 function SubBreedSelector() {
 	const dispatch = useAppDispatch();
-	const subBreeds = useAppSelector(selectSubBreeds);
-	const selectSubBreed = useAppSelector(selectSelectedSubBreed);
+	const { selectedSubBreed, subBreeds } = useAppSelector(selectBreedsState);
 
 	return (
 		<div className='sub-breed-selector' data-testid='sub-breed-selector'>
@@ -12,8 +12,8 @@ function SubBreedSelector() {
 				Seleccione una subraza:
 				<select
 					id='subBreedSelect'
-					value={selectSubBreed}
-					onChange={e => dispatch(selectedSubBreed(e.target.value))}
+					value={selectedSubBreed}
+					onChange={e => dispatch(postSelectedSubBreed(e.target.value))}
 					className='sub-breed-selector__select'
 					disabled={subBreeds.length === 0}
 				>

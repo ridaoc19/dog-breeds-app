@@ -97,6 +97,6 @@ export const Default: Story = {
 		const imageCountSelect = canvas.getByLabelText(/Numero de imágenes/i);
 		expect(imageCountSelect).toBeInTheDocument();
 
-		await userEvent.selectOptions(imageCountSelect, '20');
+		await userEvent.type(imageCountSelect, '20');
 	},
 };

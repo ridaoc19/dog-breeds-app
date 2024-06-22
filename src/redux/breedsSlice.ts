@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, fetchSubBreeds } from '../services/api';
-import type { RootState } from './store';
 import createAppSlice from './createAppSlice';
+import type { RootState } from './store';
 
 export interface InitialState {
 	breeds: string[];
 	subBreeds: string[];
 	images: string[];
-	imageRandom: string;
+	imageRandom: string[];
 	selectedBreed: string;
 	selectedSubBreed: string;
 	selectedImageCount: number;
@@ -23,7 +23,7 @@ const initialState: InitialState = {
 	breeds: [],
 	subBreeds: [],
 	images: [],
-	imageRandom: '',
+	imageRandom: [],
 	selectedImageCount: 0,
 	selectedBreed: '',
 	selectedSubBreed: '',
@@ -43,28 +43,32 @@ export const breedsSlice = createAppSlice({
 			state.selectedSubBreed = '';
 			state.images = [];
 		}),
-		selectedBreed: create.reducer((state, action: PayloadAction<string>) => {
+		postSelectedBreed: create.reducer((state, action: PayloadAction<string>) => {
 			state.selectedBreed = action.payload;
 			state.selectedSubBreed = '';
 		}),
-		selectedSubBreed: create.reducer((state, action: PayloadAction<string>) => {
+		postSelectedSubBreed: create.reducer((state, action: PayloadAction<string>) => {
 			state.selectedSubBreed = action.payload;
 		}),
-		selectedImageCount: create.reducer((state, action: PayloadAction<number>) => {
+		postSelectedImageCount: create.reducer((state, action: PayloadAction<number>) => {
 			state.selectedImageCount = action.payload;
 		}),
 		getBreeds: create.asyncThunk(
 			async () => {
-				const response = await fetchBreeds();
-				return response;
+				const [breedsResponse, imagesResponse] = await Promise.all([fetchBreeds(), fetchImagesRandom()]);
+				return { breeds: breedsResponse, imageRandom: imagesResponse };
 			},
 			{
 				pending: state => {
 					state.status.isLoading = true;
 				},
 				fulfilled: (state, action) => {
+					const {
+						payload: { breeds, imageRandom },
+					} = action;
 					state.status.isLoading = false;
-					state.breeds = action.payload;
+					state.breeds = breeds;
+					state.imageRandom = [imageRandom];
 				},
 				rejected: state => {
 					state.status.isError = true;
@@ -90,8 +94,8 @@ export const breedsSlice = createAppSlice({
 			}
 		),
 		getBreedImages: create.asyncThunk(
-			async ({ breed, imageCount, subBreed }: FetchImagesProps) => {
-				const response = await fetchImages({ breed, subBreed, imageCount });
+			async ({ breed, subBreed }: FetchImagesProps) => {
+				const response = await fetchImages({ breed, subBreed });
 				return response;
 			},
 			{
@@ -101,24 +105,7 @@ export const breedsSlice = createAppSlice({
 				fulfilled: (state, action) => {
 					state.status.isLoading = false;
 					state.images = action.payload;
-				},
-				rejected: state => {
-					state.status.isError = true;
-				},
-			}
-		),
-		getBreedImageRandom: create.asyncThunk(
-			async () => {
-				const response = await fetchImagesRandom();
-				return response;
-			},
-			{
-				pending: state => {
-					state.status.isLoading = true;
-				},
-				fulfilled: (state, action) => {
-					state.status.isLoading = false;
-					state.imageRandom = action.payload;
+					state.selectedImageCount = action.payload.length;
 				},
 				rejected: state => {
 					state.status.isError = true;
@@ -129,21 +116,12 @@ export const breedsSlice = createAppSlice({
 });
 
 export const {
-	getBreedImageRandom,
 	getBreeds,
 	getSubBreeds,
-	selectedImageCount,
-	selectedBreed,
-	selectedSubBreed,
+	postSelectedImageCount,
+	postSelectedBreed,
+	postSelectedSubBreed,
 	getBreedImages,
 	clearState,
 } = breedsSlice.actions;
-export const selectBreeds = (state: RootState) => state.breeds.breeds;
-export const selectSubBreeds = (state: RootState) => state.breeds.subBreeds;
-export const selectImages = (state: RootState) => state.breeds.images;
-export const selectImageRandom = (state: RootState) => state.breeds.imageRandom;
-
-export const selectSelectedBreed = (state: RootState) => state.breeds.selectedBreed;
-export const selectSelectedSubBreed = (state: RootState) => state.breeds.selectedSubBreed;
-export const selectImageCount = (state: RootState) => state.breeds.selectedImageCount;
-export const selectStatus = (state: RootState) => state.breeds.status;
+export const selectBreedsState = (state: RootState) => state.breeds;

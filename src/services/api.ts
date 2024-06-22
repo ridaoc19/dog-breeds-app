@@ -24,21 +24,14 @@ export const fetchSubBreeds = async ({ selectedBreed }: { selectedBreed: string 
 export interface FetchImagesProps {
 	breed: string;
 	subBreed: string;
-	imageCount: number;
 }
-export const fetchImages = async ({ breed, subBreed, imageCount }: FetchImagesProps) => {
+export const fetchImages = async ({ breed, subBreed }: FetchImagesProps) => {
 	try {
 		const breedPath = subBreed ? `${breed}/${subBreed}` : breed;
 		const response = await fetch(`https://dog.ceo/api/breed/${breedPath}/images`);
 		const data: FetchImages = await response.json();
 
-		if (Array.isArray(data.message)) {
-			if (imageCount === 0) {
-				return data.message;
-			}
-			return data.message.slice(0, imageCount);
-		}
-		throw new Error('Unexpected response format');
+		return data.message;
 	} catch (err) {
 		throw new Error('Failed to load images. Please try again.');
 	}
