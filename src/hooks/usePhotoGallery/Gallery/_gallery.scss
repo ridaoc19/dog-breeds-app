@@ -1,12 +1,12 @@
 .gallery {
-  display              : grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  grid-auto-rows       : 250px;
-  gap                  : 0.8rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	grid-auto-rows: 250px;
+	gap: 0.8rem;
 
-  &.random {
-    grid-template-columns: 1fr;
-    grid-auto-rows       : 30rem;
-    place-self           : center;
-  }
+	&.random {
+		grid-template-columns: 1fr;
+		grid-auto-rows: 30rem;
+		place-self: center;
+	}
 }

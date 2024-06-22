@@ -1,45 +1,45 @@
 .pagination {
-	display        : flex;
+	display: flex;
 	justify-content: center;
-	align-items    : center;
-	padding        : 1rem 0;
+	align-items: center;
+	padding: 1rem 0;
 
 	&__button {
-		margin          : 0 5px;
-		padding         : 5px 10px;
-		border          : none;
+		margin: 0 5px;
+		padding: 5px 10px;
+		border: none;
 		background-color: var(--base-yellow);
-		color           : var(--base-orange);
-		border          : 1px solid var(--base-orange);
-		cursor          : pointer;
-		border-radius   : 0.3rem;
-		padding         : 0.5rem 1rem;
+		color: var(--base-orange);
+		border: 1px solid var(--base-orange);
+		cursor: pointer;
+		border-radius: 0.3rem;
+		padding: 0.5rem 1rem;
 
 		&:disabled {
 			background-color: var(--neutral-light);
-			border          : 1px solid var(--base-border);
-			cursor          : not-allowed;
+			border: 1px solid var(--base-border);
+			cursor: not-allowed;
 		}
 	}
 
 	&__numbers {
-		display    : flex;
+		display: flex;
 		align-items: center;
 
 		&-item {
-			margin          : 0 2px;
-			padding         : 5px 10px;
-			border          : none;
+			margin: 0 2px;
+			padding: 5px 10px;
+			border: none;
 			background-color: var(--base-yellow-light);
-			border          : 1px solid var(--base-bright-orange);
-			cursor          : pointer;
-			border-radius   : 0.3rem;
-			padding         : 0.5rem 1rem;
+			border: 1px solid var(--base-bright-orange);
+			cursor: pointer;
+			border-radius: 0.3rem;
+			padding: 0.5rem 1rem;
 		}
 
 		&-selected {
 			background-color: var(--base-orange);
-			color           : var(--base-light);
+			color: var(--base-light);
 		}
 	}
 }
