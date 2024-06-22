@@ -17,7 +17,7 @@ function Pagination({
 	paginationTotal,
 	currentIndex,
 }: PaginationProps) {
-	const visibleRange = 5;
+	const visibleRange = 3;
 
 	const startPage = Math.max(1, currentIndex - Math.floor(visibleRange / 2));
 	const endPage = Math.min(paginationTotal, startPage + visibleRange - 1);
