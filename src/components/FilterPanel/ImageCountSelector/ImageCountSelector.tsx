@@ -4,23 +4,26 @@ import { postSelectedImageCount, selectBreedsState } from '../../../redux/breeds
 
 function ImageCountSelector() {
 	const dispatch = useAppDispatch();
-	const { selectedImageCount } = useAppSelector(selectBreedsState);
+	const { selectedImageCount, images } = useAppSelector(selectBreedsState);
 
 	return (
 		<div className='image-count-selector'>
-			<label htmlFor='imageCount'>
+			<label htmlFor='imageCount' className='breed-selector__label'>
 				Numero de imágenes:
-				<select
+				<input
 					id='imageCount'
-					onChange={e => dispatch(postSelectedImageCount(Number(e.target.value)))}
-					defaultValue={selectedImageCount}
+					type='number'
+					value={selectedImageCount}
+					onChange={e => {
+						if (Number(e.target.value) <= images.length + 1) {
+							dispatch(postSelectedImageCount(Number(e.target.value)));
+						}
+					}}
 					className='image-count-selector__select'
-				>
-					<option value={10}>10</option>
-					<option value={20}>20</option>
-					<option value={50}>50</option>
-					<option value={0}>All</option>
-				</select>
+					disabled={images.length === 0}
+					min={0}
+					max={images.length}
+				/>
 			</label>
 		</div>
 	);

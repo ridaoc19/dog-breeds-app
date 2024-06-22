@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getBreedImages, selectBreedsState } from '../../redux/breedsSlice';
 import useAppDispatch from '../useAppDispatch';
 import useAppSelector from '../useAppSelector';
@@ -9,13 +9,14 @@ import Pagination from './Pagination/Pagination';
 export default function usePhotoGallery() {
 	const dispatch = useAppDispatch();
 	const {
-		images,
+		images: imagesAll,
 		imageRandom,
 		selectedBreed,
 		selectedSubBreed,
 		selectedImageCount,
 		status: { isLoading },
 	} = useAppSelector(selectBreedsState);
+	const images = useMemo(() => imagesAll.slice(0, selectedImageCount), [imagesAll, selectedImageCount]);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const imagesPerPage = 10;
@@ -27,12 +28,11 @@ export default function usePhotoGallery() {
 				getBreedImages({
 					breed: selectedBreed,
 					subBreed: selectedSubBreed,
-					imageCount: selectedImageCount,
 				})
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedBreed, selectedSubBreed, selectedImageCount]);
+	}, [selectedBreed, selectedSubBreed]);
 
 	const indexOfLastImage = currentPage * imagesPerPage;
 	const indexOfFirstImage = indexOfLastImage - imagesPerPage;

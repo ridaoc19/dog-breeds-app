@@ -94,8 +94,8 @@ export const breedsSlice = createAppSlice({
 			}
 		),
 		getBreedImages: create.asyncThunk(
-			async ({ breed, imageCount, subBreed }: FetchImagesProps) => {
-				const response = await fetchImages({ breed, subBreed, imageCount });
+			async ({ breed, subBreed }: FetchImagesProps) => {
+				const response = await fetchImages({ breed, subBreed });
 				return response;
 			},
 			{
@@ -105,6 +105,7 @@ export const breedsSlice = createAppSlice({
 				fulfilled: (state, action) => {
 					state.status.isLoading = false;
 					state.images = action.payload;
+					state.selectedImageCount = action.payload.length;
 				},
 				rejected: state => {
 					state.status.isError = true;
