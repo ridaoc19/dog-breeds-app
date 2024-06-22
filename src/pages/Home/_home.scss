@@ -1,5 +1,11 @@
 .home {
 	display: grid;
+	grid-template-rows: min-content 1fr;
 	padding: 1rem;
 	gap: 1rem;
+
+	&__photo-gallery {
+		display: grid;
+		grid-template-rows: min-content 1fr min-content;
+	}
 }

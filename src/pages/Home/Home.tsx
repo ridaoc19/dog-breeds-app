@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { getBreeds, selectBreeds } from '../../redux/breedsSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
-import PhotoGallery from '../../components/PhotoGallery/PhotoGallery';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import usePhotoGallery from '../../hooks/usePhotoGallery/usePhotoGallery';
+import { getBreeds, selectBreedsState } from '../../redux/breedsSlice';
 
 function Home() {
 	const dispatch = useAppDispatch();
-	const breeds = useAppSelector(selectBreeds);
+	const { breeds } = useAppSelector(selectBreedsState);
+	const { Count, Gallery, Pagination } = usePhotoGallery();
+
 	useEffect(() => {
 		if (breeds.length === 0) {
 			dispatch(getBreeds());
@@ -15,8 +18,14 @@ function Home() {
 
 	return (
 		<div className='home'>
-			<FilterPanel />
-			<PhotoGallery />
+			<div className='home__filter-panel'>
+				<FilterPanel />
+			</div>
+			<div className='home__photo-gallery'>
+				{Count}
+				{Gallery}
+				{Pagination}
+			</div>
 		</div>
 	);
 }

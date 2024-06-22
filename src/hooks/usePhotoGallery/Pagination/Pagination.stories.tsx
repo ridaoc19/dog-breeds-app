@@ -94,7 +94,7 @@ function PaginationDocumentation() {
 }
 
 const meta: Meta<typeof Pagination> = {
-	title: 'components/PhotoGallery/Pagination',
+	title: 'hooks/usePhotoGallery/Pagination',
 	component: Pagination,
 	tags: ['autodocs'],
 	parameters: {
