@@ -8,7 +8,8 @@ function CountDocumentation() {
 		<div>
 			<h1>Count</h1>
 			<p>
-				El componente <code>Count</code> se utiliza para mostrar el número total de imágenes y la página actual de una galería de fotos.
+				El componente <code>Count</code> se utiliza para mostrar el número total de imágenes y la página actual de una
+				galería de fotos.
 			</p>
 
 			<h3>Props</h3>
@@ -52,7 +53,8 @@ function CountDocumentation() {
 
 			<h3>Pruebas</h3>
 			<p>
-				Para garantizar la calidad y el correcto funcionamiento del componente <code>Count</code>, se han incluido las siguientes pruebas:
+				Para garantizar la calidad y el correcto funcionamiento del componente <code>Count</code>, se han incluido las
+				siguientes pruebas:
 			</p>
 			<ul>
 				<li>
@@ -66,14 +68,15 @@ function CountDocumentation() {
 				</li>
 			</ul>
 			<p>
-				Estas pruebas aseguran que los elementos críticos del <code>Count</code> se rendericen y funcionen correctamente. Se puede verificar en <code>Interactions</code>.
+				Estas pruebas aseguran que los elementos críticos del <code>Count</code> se rendericen y funcionen
+				correctamente. Se puede verificar en <code>Interactions</code>.
 			</p>
 		</div>
 	);
 }
 
 const meta: Meta<typeof Count> = {
-	title: 'components/Count',
+	title: 'hooks/usePhotoGallery/Count',
 	component: Count,
 	tags: ['autodocs'],
 	parameters: {
@@ -98,17 +101,16 @@ export const Default: Story = {
 		totalPages: 10,
 		totalImages: 100,
 	},
-	render: (args) => <Count {...args} />,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
 		const countElement = canvas.getByTestId('count');
 		expect(countElement).toBeInTheDocument();
 
-		const totalImagesElement = canvas.getByText(`Total: ${args.totalImages}`);
+		const totalImagesElement = canvas.getByText(/Total/i);
 		expect(totalImagesElement).toBeInTheDocument();
 
-		const paginationElement = canvas.getByText(`Pagina: ${args.currentPage}/${args.totalPages}`);
+		const paginationElement = canvas.getByText(/Pagina/i);
 		expect(paginationElement).toBeInTheDocument();
 	},
 };

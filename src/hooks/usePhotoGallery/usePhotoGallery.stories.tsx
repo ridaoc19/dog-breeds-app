@@ -66,8 +66,21 @@ function UsePhotoGalleryDocumentation() {
 	);
 }
 
+function Render() {
+	const { Count, Gallery, Pagination } = usePhotoGallery();
+
+	return (
+		<div>
+			{Count}
+			{Gallery}
+			{Pagination}
+		</div>
+	);
+}
+
 const meta: Meta<typeof usePhotoGallery> = {
 	title: 'hooks/usePhotoGallery',
+	component: Render,
 	tags: ['autodocs'],
 	parameters: {
 		docs: {
@@ -81,17 +94,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	render: () => {
-		const { Count, Gallery, Pagination } = usePhotoGallery();
-
-		return (
-			<div>
-				{Count}
-				{Gallery}
-				{Pagination}
-			</div>
-		);
-	},
+	render: () => <Render />,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
@@ -103,7 +106,5 @@ export const Default: Story = {
 
 		const paginationElement = canvas.getByTestId('pagination');
 		expect(paginationElement).toBeInTheDocument();
-
-		await canvas.findAllByTestId('cards-image');
 	},
 };

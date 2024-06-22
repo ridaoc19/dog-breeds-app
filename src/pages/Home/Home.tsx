@@ -26,7 +26,6 @@ function Home() {
 				{Gallery}
 				{Pagination}
 			</div>
-			{/* <PhotoGallery /> */}
 		</div>
 	);
 }

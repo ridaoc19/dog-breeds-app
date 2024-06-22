@@ -6,7 +6,7 @@ interface CountProps {
 
 export default function Count({ currentPage, totalPages, totalImages }: CountProps) {
 	return (
-		<div className='count'>
+		<div className='count' data-testid='count'>
 			<p>
 				<strong>Total:</strong> {totalImages}
 			</p>

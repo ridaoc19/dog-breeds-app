@@ -3,7 +3,7 @@ import Loading from '../../../components/Loading/Loading';
 
 function Gallery({ isLoading, images, isRandom }: { isLoading: boolean; images: string[]; isRandom: boolean }) {
 	return (
-		<div className={`gallery ${isRandom ? 'random' : ''}`}>
+		<div className={`gallery ${isRandom ? 'random' : ''}`} data-testid='gallery'>
 			{isLoading ? (
 				<Loading />
 			) : (

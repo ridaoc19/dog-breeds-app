@@ -95,7 +95,13 @@ export const Homes: Story = {
 		const filterPanel = canvas.getByText('Seleccione o busca una raza:');
 		expect(filterPanel).toBeInTheDocument();
 
-		const photoGallery = canvas.getByTestId('photo-gallery');
-		expect(photoGallery).toBeInTheDocument();
+		const countElement = canvas.getByTestId('count');
+		expect(countElement).toBeInTheDocument();
+
+		const galleryElement = canvas.getByTestId('gallery');
+		expect(galleryElement).toBeInTheDocument();
+
+		const paginationElement = canvas.getByTestId('pagination');
+		expect(paginationElement).toBeInTheDocument();
 	},
 };

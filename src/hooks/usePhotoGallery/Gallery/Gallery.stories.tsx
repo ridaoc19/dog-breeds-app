@@ -2,16 +2,15 @@ import { Controls, Primary } from '@storybook/blocks';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 import Gallery from './Gallery';
-import { images } from '../../../.storybook/data';
-import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
+import { images } from '../../../../.storybook/data';
 
 function GalleryDocumentation() {
 	return (
 		<div>
 			<h1>Gallery</h1>
 			<p>
-				El componente <code>Gallery</code> se utiliza para mostrar una galería de fotos con un estado de carga. Utiliza los componentes <code>Card</code> y <code>Loading</code>.
+				El componente <code>Gallery</code> se utiliza para mostrar una galería de fotos con un estado de carga. Utiliza
+				los componentes <code>Card</code> y <code>Loading</code>.
 			</p>
 
 			<h3>Props</h3>
@@ -55,7 +54,8 @@ function GalleryDocumentation() {
 
 			<h3>Pruebas</h3>
 			<p>
-				Para garantizar la calidad y el correcto funcionamiento del componente <code>Gallery</code>, se han incluido las siguientes pruebas:
+				Para garantizar la calidad y el correcto funcionamiento del componente <code>Gallery</code>, se han incluido las
+				siguientes pruebas:
 			</p>
 			<ul>
 				<li>
@@ -65,18 +65,20 @@ function GalleryDocumentation() {
 					<strong>Estado de Carga</strong>: Se verifica que el estado de carga funcione correctamente.
 				</li>
 				<li>
-					<strong>Renderización de las Tarjetas</strong>: Se verifica que las tarjetas de fotos se rendericen correctamente.
+					<strong>Renderización de las Tarjetas</strong>: Se verifica que las tarjetas de fotos se rendericen
+					correctamente.
 				</li>
 			</ul>
 			<p>
-				Estas pruebas aseguran que los elementos críticos del <code>Gallery</code> se rendericen y funcionen correctamente. Se puede verificar en <code>Interactions</code>.
+				Estas pruebas aseguran que los elementos críticos del <code>Gallery</code> se rendericen y funcionen
+				correctamente. Se puede verificar en <code>Interactions</code>.
 			</p>
 		</div>
 	);
 }
 
 const meta: Meta<typeof Gallery> = {
-	title: 'components/Gallery',
+	title: 'hooks/usePhotoGallery/Gallery',
 	component: Gallery,
 	tags: ['autodocs'],
 	parameters: {
@@ -86,7 +88,7 @@ const meta: Meta<typeof Gallery> = {
 	},
 	argTypes: {
 		isLoading: { control: 'boolean' },
-		images: { control: 'array' },
+		images: { control: 'object' },
 		isRandom: { control: 'boolean' },
 	},
 };
@@ -95,18 +97,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Gallerys: Story = {
 	args: {
 		isLoading: false,
-		images: images,
+		images,
 		isRandom: false,
 	},
-	render: (args) => (
-		<Provider store={store}>
-			<Gallery {...args} />
-		</Provider>
-	),
-	play: async ({ canvasElement }) => {
+	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
 
 		const galleryElement = canvas.getByTestId('gallery');
