@@ -1,11 +1,20 @@
 import logo from '../../../assets/logo.svg';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { clearState } from '../../../redux/breedsSlice';
 
 function Navbar() {
+	const dispatch = useAppDispatch();
 	return (
 		<div className='navbar'>
-			<div className='navbar__logo'>
+			<button
+				type='button'
+				className='navbar__logo'
+				onClick={() => {
+					dispatch(clearState());
+				}}
+			>
 				<img src={logo} alt='logo' />
-			</div>
+			</button>
 		</div>
 	);
 }

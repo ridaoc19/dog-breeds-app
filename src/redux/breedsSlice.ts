@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, fetchSubBreeds } from '../services/api';
+import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom } from '../services/api';
 import createAppSlice from './createAppSlice';
 import type { RootState } from './store';
 
 export interface InitialState {
-	breeds: string[];
+	breeds: {
+		[breed: string]: string[];
+	};
 	subBreeds: string[];
 	images: string[];
 	imageRandom: string[];
@@ -20,7 +22,7 @@ export interface InitialState {
 }
 
 const initialState: InitialState = {
-	breeds: [],
+	breeds: {},
 	subBreeds: [],
 	images: [],
 	imageRandom: [],
@@ -41,6 +43,8 @@ export const breedsSlice = createAppSlice({
 		clearState: create.reducer(state => {
 			state.selectedBreed = '';
 			state.selectedSubBreed = '';
+			state.selectedImageCount = 0;
+			state.subBreeds = [];
 			state.images = [];
 		}),
 		postSelectedBreed: create.reducer((state, action: PayloadAction<string>) => {
@@ -49,6 +53,9 @@ export const breedsSlice = createAppSlice({
 		}),
 		postSelectedSubBreed: create.reducer((state, action: PayloadAction<string>) => {
 			state.selectedSubBreed = action.payload;
+		}),
+		postSubBreed: create.reducer((state, action: PayloadAction<string[]>) => {
+			state.subBreeds = action.payload;
 		}),
 		postSelectedImageCount: create.reducer((state, action: PayloadAction<number>) => {
 			state.selectedImageCount = action.payload;
@@ -66,27 +73,11 @@ export const breedsSlice = createAppSlice({
 					const {
 						payload: { breeds, imageRandom },
 					} = action;
+					console.log(breeds);
+
 					state.status.isLoading = false;
 					state.breeds = breeds;
 					state.imageRandom = [imageRandom];
-				},
-				rejected: state => {
-					state.status.isError = true;
-				},
-			}
-		),
-		getSubBreeds: create.asyncThunk(
-			async (selectedBreed: string) => {
-				const response = await fetchSubBreeds({ selectedBreed });
-				return response;
-			},
-			{
-				pending: state => {
-					state.status.isLoading = true;
-				},
-				fulfilled: (state, action) => {
-					state.status.isLoading = false;
-					state.subBreeds = action.payload;
 				},
 				rejected: state => {
 					state.status.isError = true;
@@ -117,11 +108,11 @@ export const breedsSlice = createAppSlice({
 
 export const {
 	getBreeds,
-	getSubBreeds,
-	postSelectedImageCount,
+	clearState,
+	postSubBreed,
+	getBreedImages,
 	postSelectedBreed,
 	postSelectedSubBreed,
-	getBreedImages,
-	clearState,
+	postSelectedImageCount,
 } = breedsSlice.actions;
 export const selectBreedsState = (state: RootState) => state.breeds;
