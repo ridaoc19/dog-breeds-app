@@ -2,25 +2,27 @@ import { useEffect, useState } from 'react';
 import clean from '../../../assets/clean.svg';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { clearState, getSubBreeds, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
+import { clearState, postSubBreed, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
-	const { breeds } = useAppSelector(selectBreedsState);
+	const { breeds, images } = useAppSelector(selectBreedsState);
 
 	useEffect(() => {
-		if (breeds.includes(search)) {
+		if (images.length === 0) {
+			setSearch('');
+			setShowDropdown(false);
+		}
+	}, [images]);
+
+	useEffect(() => {
+		if (Object.keys(breeds).includes(search)) {
 			dispatch(postSelectedBreed(search));
-			dispatch(getSubBreeds(search));
+			dispatch(postSubBreed(breeds[search]));
 		}
 	}, [breeds, dispatch, search]);
-
-	const handleSelectBreed = (breed: string) => {
-		setSearch(breed);
-		setShowDropdown(false);
-	};
 
 	return (
 		<div className='breed-selector' data-testid='breed-selector'>
@@ -30,6 +32,7 @@ function BreedSelector() {
 					<input
 						id='breedSelect'
 						value={search}
+						placeholder='Elige o busca una raza'
 						onChange={e => {
 							setSearch(e.target.value);
 							setShowDropdown(true);
@@ -39,6 +42,7 @@ function BreedSelector() {
 							setTimeout(() => setShowDropdown(false), 100);
 						}}
 						onFocus={() => setShowDropdown(true)}
+						autoComplete='off'
 					/>
 				</label>
 				<button
@@ -55,16 +59,20 @@ function BreedSelector() {
 			<div className='breed-selector__list'>
 				{showDropdown && (
 					<ul className='breed-selector__list--dropdown'>
-						{breeds
-							.filter(breed => breed.toLowerCase().includes(search.toLowerCase()))
-							.map(breed => (
+						{Object.entries(breeds)
+							.filter(([breed]) => breed.toLowerCase().includes(search.toLowerCase()))
+							.map(([breed, subBreeds]) => (
 								// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
 								<li
 									key={breed}
 									className='breed-selector__list--dropdown-item'
-									onMouseDown={() => handleSelectBreed(breed)}
+									onMouseDown={() => {
+										setSearch(breed);
+										setShowDropdown(false);
+									}}
 								>
-									{breed}
+									<span>{breed}</span>
+									<span>{subBreeds.length}</span>
 								</li>
 							))}
 					</ul>

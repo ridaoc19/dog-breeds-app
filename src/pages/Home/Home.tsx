@@ -11,7 +11,7 @@ function Home() {
 	const { Count, Gallery, Pagination } = usePhotoGallery();
 
 	useEffect(() => {
-		if (breeds.length === 0) {
+		if (Object.keys(breeds).length === 0) {
 			dispatch(getBreeds());
 		}
 	}, [breeds, dispatch]);
