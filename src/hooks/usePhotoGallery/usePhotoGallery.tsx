@@ -16,10 +16,14 @@ export default function usePhotoGallery() {
 		selectedImageCount,
 		status: { isLoading },
 	} = useAppSelector(selectBreedsState);
-	const images = useMemo(() => imagesAll.slice(0, selectedImageCount), [imagesAll, selectedImageCount]);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const imagesPerPage = 10;
+
+	const images = useMemo(() => {
+		setCurrentPage(1);
+		return imagesAll.slice(0, selectedImageCount);
+	}, [imagesAll, selectedImageCount]);
 
 	useEffect(() => {
 		if (selectedBreed) {
