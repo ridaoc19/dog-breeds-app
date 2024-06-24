@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { selectBreedsState } from '../../redux/breedsSlice';
 import useAppSelector from '../useAppSelector';
 import Count from './Count/Count';
@@ -18,10 +18,9 @@ export default function usePhotoGallery() {
 	} = useAppSelector(selectBreedsState);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const imagesPerPage = 10;
+	const imagesPerPage = 12;
 
 	const images = useMemo(() => {
-		setCurrentPage(1);
 		if (isFavorites) {
 			return getAllFavorites();
 		}
@@ -53,6 +52,9 @@ export default function usePhotoGallery() {
 			handlePageChange(currentPage - 1);
 		}
 	};
+	useEffect(() => {
+		handlePageChange(1);
+	}, [selectedBreed, selectedSubBreed, selectedImageCount, isFavorites]);
 
 	return {
 		Count: <Count totalImages={images.length} currentPage={currentPage} totalPages={totalPages} />,

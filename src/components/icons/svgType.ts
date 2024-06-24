@@ -1,5 +1,4 @@
 enum SvgType {
-	Logo = 'logo',
 	Search = 'Search',
 	Favorites = 'Favorites',
 	Favorites_red = 'Favorites_red',

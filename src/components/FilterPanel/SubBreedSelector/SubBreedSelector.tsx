@@ -15,7 +15,7 @@ function SubBreedSelector() {
 					value={selectedSubBreed}
 					onChange={e => dispatch(postSelectedSubBreed({ breed: selectedBreed, subBreed: e.target.value }))}
 					className='sub-breed-selector__select'
-					disabled={!selectedBreed}
+					disabled={!selectedBreed || breeds[selectedBreed].subBreeds.length === 0}
 				>
 					<option value=''>Elige una subraza</option>
 					{selectedBreed &&

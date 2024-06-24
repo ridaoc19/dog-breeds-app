@@ -4,7 +4,7 @@ import { Images } from '../../../services/api';
 
 function Gallery({ isLoading, images, isFavorite }: { isLoading: boolean; images: Images[]; isFavorite: boolean }) {
 	return (
-		<div className='gallery' data-testid='gallery'>
+		<div className={`gallery ${images.length === 1 ? 'random' : ''}`} data-testid='gallery'>
 			{isLoading ? (
 				<Loading />
 			) : (

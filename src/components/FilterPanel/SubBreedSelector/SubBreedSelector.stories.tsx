@@ -95,7 +95,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	args: {
 		subBreeds: ['Husky', 'Malamute', 'Samoyed'],
-		setSelectedSubBreed: (selected: string) => console.log('Selected sub-breed:', selected),
+		setSelectedSubBreed: (selected: string) => console.warn('Selected sub-breed:', selected),
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);

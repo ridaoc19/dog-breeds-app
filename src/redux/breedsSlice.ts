@@ -11,33 +11,27 @@ export interface InitialState {
 			images: Images[];
 		};
 	};
-	isFavorites: boolean;
-	subBreeds: string[];
-	images: Images[];
 	imageRandom: string[];
+	isFavorites: boolean;
 	selectedBreed: string;
 	selectedSubBreed: string;
 	selectedImageCount: number;
 	status: {
 		isLoading: boolean;
 		isError: boolean;
-		error: string[];
 	};
 }
 
 const initialState: InitialState = {
 	breeds: {},
-	isFavorites: true,
-	subBreeds: [],
-	images: [],
 	imageRandom: [],
+	isFavorites: true,
 	selectedImageCount: 0,
 	selectedBreed: '',
 	selectedSubBreed: '',
 	status: {
 		isLoading: false,
 		isError: false,
-		error: [],
 	},
 };
 
@@ -49,21 +43,15 @@ export const breedsSlice = createAppSlice({
 			state.selectedBreed = '';
 			state.selectedSubBreed = '';
 			state.selectedImageCount = 0;
-			state.subBreeds = [];
-			state.images = [];
 			state.isFavorites = true;
 		}),
 		postSelectedSubBreed: create.reducer(
 			(state, { payload: { breed, subBreed } }: PayloadAction<{ breed: string; subBreed: string }>) => {
 				const filterImages = state.breeds[breed].images.filter(({ image }) => image.includes(subBreed));
-				state.images = filterImages;
 				state.selectedImageCount = filterImages.length;
 				state.selectedSubBreed = subBreed;
 			}
 		),
-		postSubBreed: create.reducer((state, action: PayloadAction<string[]>) => {
-			state.subBreeds = action.payload;
-		}),
 		postSelectedImageCount: create.reducer((state, action: PayloadAction<number>) => {
 			state.selectedImageCount = action.payload;
 		}),
@@ -106,12 +94,11 @@ export const breedsSlice = createAppSlice({
 				pending: state => {
 					state.status.isLoading = true;
 				},
-				fulfilled: (state, { payload: { breeds, breed, images } }) => {
+				fulfilled: (state, { payload: { breeds, breed } }) => {
 					state.selectedBreed = breed;
 					state.selectedSubBreed = '';
 					state.status.isLoading = false;
 					state.breeds = breeds;
-					state.images = images;
 					state.selectedImageCount = breeds[breed].images.length;
 					state.isFavorites = false;
 				},
@@ -126,7 +113,6 @@ export const breedsSlice = createAppSlice({
 export const {
 	getBreeds,
 	clearState,
-	postSubBreed,
 	postIsFavorite,
 	postSelectedBreed,
 	updateToggleFavorite,

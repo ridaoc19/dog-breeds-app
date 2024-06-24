@@ -67,11 +67,11 @@ const getSubBreedFromUrl = (url: string, subBreeds: string[]) => {
 export const fetchImages = async ({
 	breed,
 	subBreed,
-}: FetchImagesProps): Promise<{ breeds: InitialState['breeds']; breed: string; images: Images[] }> => {
+}: FetchImagesProps): Promise<{ breeds: InitialState['breeds']; breed: string }> => {
 	const cached: InitialState['breeds'] = getCachedData('breeds') || {};
 
 	if (cached[breed] && cached[breed].images.length > 0) {
-		return { breeds: cached, breed, images: cached[breed].images };
+		return { breeds: cached, breed };
 	}
 
 	try {
@@ -92,7 +92,7 @@ export const fetchImages = async ({
 		};
 
 		setCachedData('breeds', cached);
-		return { breeds: cached, breed, images: updatedImages };
+		return { breeds: cached, breed };
 	} catch (err) {
 		throw new Error('Failed to load images. Please try again.');
 	}
@@ -137,41 +137,6 @@ export const getAllFavorites = (): Images[] => {
 
 	return favorites;
 };
-
-// export const fetchBreeds = async () => {
-// 	try {
-// 		const response = await fetch('https://dog.ceo/api/breeds/list/all');
-// 		const data: FetchBreeds = await response.json();
-// 		return Object.entries(data.message).reduce(
-// 			(acc, [breed, subBreeds]) => {
-// 				acc[breed] = {
-// 					subBreeds,
-// 					images: [],
-// 				};
-// 				return acc;
-// 			},
-// 			{} as InitialState['breeds']
-// 		);
-// 	} catch (err) {
-// 		throw Error('Failed to load breeds. Please try again.');
-// 	}
-// };
-
-// export interface FetchImagesProps {
-// 	breed: string;
-// 	subBreed: string;
-// }
-// export const fetchImages = async ({ breed, subBreed }: FetchImagesProps) => {
-// 	try {
-// 		const breedPath = subBreed ? `${breed}/${subBreed}` : breed;
-// 		const response = await fetch(`https://dog.ceo/api/breed/${breedPath}/images`);
-// 		const data: FetchImages = await response.json();
-
-// 		return data.message;
-// 	} catch (err) {
-// 		throw new Error('Failed to load images. Please try again.');
-// 	}
-// };
 
 export const fetchImagesRandom = async () => {
 	try {

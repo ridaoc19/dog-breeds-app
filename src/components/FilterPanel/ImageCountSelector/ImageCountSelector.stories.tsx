@@ -94,7 +94,7 @@ export const Default: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		const imageCountSelect = canvas.getByLabelText(/Numero de imágenes/i);
+		const imageCountSelect = canvas.getByLabelText(/número de imágenes/i);
 		expect(imageCountSelect).toBeInTheDocument();
 
 		await userEvent.type(imageCountSelect, '20');
