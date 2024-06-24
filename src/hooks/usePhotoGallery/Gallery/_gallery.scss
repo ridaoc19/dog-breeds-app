@@ -5,8 +5,11 @@
 	gap: 0.8rem;
 
 	&.random {
-		grid-template-columns: 1fr;
-		grid-auto-rows: 20rem;
-		place-self: center;
+		grid-template-columns: repeat(auto-fit, minmax(12rem, 18rem));
+	}
+
+	@media (max-width: 550px) {
+		grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+		grid-auto-rows: 200px;
 	}
 }

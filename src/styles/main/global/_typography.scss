@@ -48,6 +48,12 @@ code {
 	overflow: hidden;
 }
 
+.no-events {
+	pointer-events: none;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 a {
 	color: var(--base-dark);
 	text-decoration: none;

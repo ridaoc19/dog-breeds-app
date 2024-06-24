@@ -106,7 +106,7 @@ export const Cards: Story = {
 
 		const imageElement = canvas.getByRole('img');
 		expect(imageElement).toBeInTheDocument();
-		expect(imageElement).toHaveAttribute('src', images[0]);
+		expect(imageElement).toHaveAttribute('src', images[0].image);
 		expect(imageElement).toHaveAttribute('alt', 'Company logo');
 	},
 };
