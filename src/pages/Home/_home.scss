@@ -1,11 +1,15 @@
 .home {
-	display: grid;
-	grid-template-rows: min-content 1fr;
-	padding: 1rem;
-	gap: 1rem;
+	display           : grid;
+	grid-template-rows: min-content min-content 1fr;
+	padding           : 1rem;
+	gap               : 1rem;
+
+	&__title {
+		justify-self: center;
+	}
 
 	&__photo-gallery {
-		display: grid;
+		display           : grid;
 		grid-template-rows: min-content 1fr min-content;
 	}
 }

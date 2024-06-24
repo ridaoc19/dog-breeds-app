@@ -1,15 +1,19 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom } from '../services/api';
+import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, Images, toggleFavorite } from '../services/api';
 import createAppSlice from './createAppSlice';
 import type { RootState } from './store';
 
 export interface InitialState {
 	breeds: {
-		[breed: string]: string[];
+		[breed: string]: {
+			subBreeds: string[];
+			images: Images[];
+		};
 	};
+	isFavorites: boolean;
 	subBreeds: string[];
-	images: string[];
+	images: Images[];
 	imageRandom: string[];
 	selectedBreed: string;
 	selectedSubBreed: string;
@@ -23,6 +27,7 @@ export interface InitialState {
 
 const initialState: InitialState = {
 	breeds: {},
+	isFavorites: true,
 	subBreeds: [],
 	images: [],
 	imageRandom: [],
@@ -46,19 +51,29 @@ export const breedsSlice = createAppSlice({
 			state.selectedImageCount = 0;
 			state.subBreeds = [];
 			state.images = [];
+			state.isFavorites = true;
 		}),
-		postSelectedBreed: create.reducer((state, action: PayloadAction<string>) => {
-			state.selectedBreed = action.payload;
-			state.selectedSubBreed = '';
-		}),
-		postSelectedSubBreed: create.reducer((state, action: PayloadAction<string>) => {
-			state.selectedSubBreed = action.payload;
-		}),
+		postSelectedSubBreed: create.reducer(
+			(state, { payload: { breed, subBreed } }: PayloadAction<{ breed: string; subBreed: string }>) => {
+				const filterImages = state.breeds[breed].images.filter(({ image }) => image.includes(subBreed));
+				state.images = filterImages;
+				state.selectedImageCount = filterImages.length;
+				state.selectedSubBreed = subBreed;
+			}
+		),
 		postSubBreed: create.reducer((state, action: PayloadAction<string[]>) => {
 			state.subBreeds = action.payload;
 		}),
 		postSelectedImageCount: create.reducer((state, action: PayloadAction<number>) => {
 			state.selectedImageCount = action.payload;
+		}),
+		updateToggleFavorite: create.reducer(
+			(state, { payload: { breed, imageUrl } }: PayloadAction<{ breed: string; imageUrl: string }>) => {
+				state.breeds = toggleFavorite({ breed, imageUrl });
+			}
+		),
+		postIsFavorite: create.reducer(state => {
+			state.isFavorites = !state.isFavorites;
 		}),
 		getBreeds: create.asyncThunk(
 			async () => {
@@ -73,8 +88,6 @@ export const breedsSlice = createAppSlice({
 					const {
 						payload: { breeds, imageRandom },
 					} = action;
-					console.log(breeds);
-
 					state.status.isLoading = false;
 					state.breeds = breeds;
 					state.imageRandom = [imageRandom];
@@ -84,7 +97,7 @@ export const breedsSlice = createAppSlice({
 				},
 			}
 		),
-		getBreedImages: create.asyncThunk(
+		postSelectedBreed: create.asyncThunk(
 			async ({ breed, subBreed }: FetchImagesProps) => {
 				const response = await fetchImages({ breed, subBreed });
 				return response;
@@ -93,10 +106,14 @@ export const breedsSlice = createAppSlice({
 				pending: state => {
 					state.status.isLoading = true;
 				},
-				fulfilled: (state, action) => {
+				fulfilled: (state, { payload: { breeds, breed, images } }) => {
+					state.selectedBreed = breed;
+					state.selectedSubBreed = '';
 					state.status.isLoading = false;
-					state.images = action.payload;
-					state.selectedImageCount = action.payload.length;
+					state.breeds = breeds;
+					state.images = images;
+					state.selectedImageCount = breeds[breed].images.length;
+					state.isFavorites = false;
 				},
 				rejected: state => {
 					state.status.isError = true;
@@ -110,8 +127,9 @@ export const {
 	getBreeds,
 	clearState,
 	postSubBreed,
-	getBreedImages,
+	postIsFavorite,
 	postSelectedBreed,
+	updateToggleFavorite,
 	postSelectedSubBreed,
 	postSelectedImageCount,
 } = breedsSlice.actions;

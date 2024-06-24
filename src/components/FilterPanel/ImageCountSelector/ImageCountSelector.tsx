@@ -9,7 +9,7 @@ function ImageCountSelector() {
 	return (
 		<div className='image-count-selector'>
 			<label htmlFor='imageCount' className='breed-selector__label'>
-				Numero de imágenes:
+				Numero de imágenes que desea ver:
 				<input
 					id='imageCount'
 					type='number'

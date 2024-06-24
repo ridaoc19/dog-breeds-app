@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
-import { getBreedImages, selectBreedsState } from '../../redux/breedsSlice';
-import useAppDispatch from '../useAppDispatch';
+import { useMemo, useState } from 'react';
+import { selectBreedsState } from '../../redux/breedsSlice';
 import useAppSelector from '../useAppSelector';
 import Count from './Count/Count';
 import Gallery from './Gallery/Gallery';
 import Pagination from './Pagination/Pagination';
+import { getAllFavorites } from '../../services/api';
 
 export default function usePhotoGallery() {
-	const dispatch = useAppDispatch();
 	const {
-		images: imagesAll,
-		imageRandom,
+		// images: imageAll,
+		breeds,
+		isFavorites,
 		selectedBreed,
 		selectedSubBreed,
 		selectedImageCount,
@@ -22,21 +22,16 @@ export default function usePhotoGallery() {
 
 	const images = useMemo(() => {
 		setCurrentPage(1);
-		return imagesAll.slice(0, selectedImageCount);
-	}, [imagesAll, selectedImageCount]);
-
-	useEffect(() => {
-		if (selectedBreed) {
-			setCurrentPage(1);
-			dispatch(
-				getBreedImages({
-					breed: selectedBreed,
-					subBreed: selectedSubBreed,
-				})
-			);
+		if (isFavorites) {
+			return getAllFavorites();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedBreed, selectedSubBreed]);
+		if (selectedBreed) {
+			return breeds[selectedBreed].images
+				.filter(({ subBreed }) => selectedSubBreed === '' || subBreed === selectedSubBreed)
+				.slice(0, selectedImageCount);
+		}
+		return [];
+	}, [breeds, selectedBreed, selectedImageCount, selectedSubBreed, isFavorites]);
 
 	const indexOfLastImage = currentPage * imagesPerPage;
 	const indexOfFirstImage = indexOfLastImage - imagesPerPage;
@@ -61,13 +56,7 @@ export default function usePhotoGallery() {
 
 	return {
 		Count: <Count totalImages={images.length} currentPage={currentPage} totalPages={totalPages} />,
-		Gallery: (
-			<Gallery
-				isLoading={isLoading}
-				images={currentImages.length > 0 ? currentImages : imageRandom}
-				isRandom={currentImages.length === 0}
-			/>
-		),
+		Gallery: <Gallery isLoading={isLoading} images={currentImages} isFavorite={isFavorites} />,
 		Pagination: (
 			<Pagination
 				currentIndex={currentPage}
