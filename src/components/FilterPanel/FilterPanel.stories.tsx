@@ -147,7 +147,7 @@ export const FiltersPanel: Story = {
 		await userEvent.type(subBreedSelect, 'french');
 		expect(args.subBreeds[0]).toBe('french');
 
-		const imageCountSelect = canvas.getByLabelText(/Numero de imágenes/i);
+		const imageCountSelect = canvas.getByLabelText(/número de imágenes/i);
 		expect(imageCountSelect).toBeInTheDocument();
 
 		await userEvent.type(imageCountSelect, '20');

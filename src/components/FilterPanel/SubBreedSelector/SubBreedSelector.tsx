@@ -4,7 +4,7 @@ import { postSelectedSubBreed, selectBreedsState } from '../../../redux/breedsSl
 
 function SubBreedSelector() {
 	const dispatch = useAppDispatch();
-	const { selectedSubBreed, subBreeds } = useAppSelector(selectBreedsState);
+	const { selectedSubBreed, breeds, selectedBreed } = useAppSelector(selectBreedsState);
 
 	return (
 		<div className='sub-breed-selector' data-testid='sub-breed-selector'>
@@ -13,16 +13,17 @@ function SubBreedSelector() {
 				<select
 					id='subBreedSelect'
 					value={selectedSubBreed}
-					onChange={e => dispatch(postSelectedSubBreed(e.target.value))}
+					onChange={e => dispatch(postSelectedSubBreed({ breed: selectedBreed, subBreed: e.target.value }))}
 					className='sub-breed-selector__select'
-					disabled={subBreeds.length === 0}
+					disabled={!selectedBreed || breeds[selectedBreed].subBreeds.length === 0}
 				>
 					<option value=''>Elige una subraza</option>
-					{subBreeds.map(subBreed => (
-						<option key={subBreed} value={subBreed}>
-							{subBreed}
-						</option>
-					))}
+					{selectedBreed &&
+						breeds[selectedBreed].subBreeds.map(subBreed => (
+							<option key={subBreed} value={subBreed}>
+								{subBreed}
+							</option>
+						))}
 				</select>
 			</label>
 		</div>

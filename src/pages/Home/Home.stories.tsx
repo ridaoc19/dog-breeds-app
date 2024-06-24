@@ -2,10 +2,11 @@ import { Controls, Primary } from '@storybook/blocks';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 import Home from './Home';
+import Layout from '../../components/layout/Layout';
 
 function HomeDocumentation() {
 	return (
-		<div>
+		<div style={{ display: 'grid' }}>
 			<h1>Home</h1>
 			<p>
 				El componente <code>Home</code> es la página principal que incluye el <code>FilterPanel</code> y el{' '}
@@ -76,6 +77,13 @@ const meta: Meta<typeof Home> = {
 	title: 'pages/Home',
 	component: Home,
 	tags: ['autodocs'],
+	decorators: [
+		Story => (
+			<Layout>
+				<Story />
+			</Layout>
+		),
+	],
 	parameters: {
 		docs: {
 			page: () => <HomeDocumentation />,
@@ -101,7 +109,7 @@ export const Homes: Story = {
 		const galleryElement = canvas.getByTestId('gallery');
 		expect(galleryElement).toBeInTheDocument();
 
-		const paginationElement = canvas.getByTestId('pagination');
-		expect(paginationElement).toBeInTheDocument();
+		const paginationElement = await canvas.findAllByTestId('pagination');
+		expect(paginationElement.length).toBeGreaterThan(0);
 	},
 };

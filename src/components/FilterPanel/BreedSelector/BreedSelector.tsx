@@ -2,27 +2,27 @@ import { useEffect, useState } from 'react';
 import clean from '../../../assets/clean.svg';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { clearState, postSubBreed, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
+import { clearState, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
-	const { breeds, images } = useAppSelector(selectBreedsState);
+	const { breeds, selectedBreed } = useAppSelector(selectBreedsState);
 
 	useEffect(() => {
-		if (images.length === 0) {
+		if (!selectedBreed) {
 			setSearch('');
 			setShowDropdown(false);
 		}
-	}, [images]);
+	}, [selectedBreed]);
 
 	useEffect(() => {
 		if (Object.keys(breeds).includes(search)) {
-			dispatch(postSelectedBreed(search));
-			dispatch(postSubBreed(breeds[search]));
+			dispatch(postSelectedBreed({ breed: search, subBreed: '' }));
 		}
-	}, [breeds, dispatch, search]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search]);
 
 	return (
 		<div className='breed-selector' data-testid='breed-selector'>
@@ -61,7 +61,7 @@ function BreedSelector() {
 					<ul className='breed-selector__list--dropdown'>
 						{Object.entries(breeds)
 							.filter(([breed]) => breed.toLowerCase().includes(search.toLowerCase()))
-							.map(([breed, subBreeds]) => (
+							.map(([breed, values]) => (
 								// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
 								<li
 									key={breed}
@@ -72,7 +72,7 @@ function BreedSelector() {
 									}}
 								>
 									<span>{breed}</span>
-									<span>{subBreeds.length}</span>
+									<span>{values.subBreeds.length}</span>
 								</li>
 							))}
 					</ul>
