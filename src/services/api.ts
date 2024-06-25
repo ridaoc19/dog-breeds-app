@@ -1,5 +1,3 @@
-import type { InitialState } from '../redux/breedsSlice';
-
 const getCachedData = (key: string, expiryTime: number = 24 * 60 * 60 * 1000) => {
 	const cached = localStorage.getItem(key);
 	if (cached) {
@@ -11,13 +9,13 @@ const getCachedData = (key: string, expiryTime: number = 24 * 60 * 60 * 1000) =>
 	return null;
 };
 
-const setCachedData = (key: string, data: InitialState['breeds']) => {
+const setCachedData = (key: string, data: DogsBreed.Breeds) => {
 	localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
 };
 
 // ! //////////////////////////
 
-export const fetchBreeds = async (): Promise<InitialState['breeds']> => {
+export const fetchBreeds = async (): Promise<DogsBreed.Breeds> => {
 	const cached = getCachedData('breeds');
 	if (cached) {
 		return cached;
@@ -25,17 +23,14 @@ export const fetchBreeds = async (): Promise<InitialState['breeds']> => {
 
 	try {
 		const response = await fetch('https://dog.ceo/api/breeds/list/all');
-		const data: FetchBreeds = await response.json();
-		const breeds = Object.entries(data.message).reduce(
-			(acc, [breed, subBreeds]) => {
-				acc[breed] = {
-					subBreeds,
-					images: [],
-				};
-				return acc;
-			},
-			{} as InitialState['breeds']
-		);
+		const data: Api.FetchBreeds = await response.json();
+		const breeds = Object.entries(data.message).reduce((acc, [breed, subBreeds]) => {
+			acc[breed] = {
+				subBreeds,
+				images: [],
+			};
+			return acc;
+		}, {} as DogsBreed.Breeds);
 		setCachedData('breeds', breeds);
 		return breeds;
 	} catch (err) {
@@ -44,21 +39,19 @@ export const fetchBreeds = async (): Promise<InitialState['breeds']> => {
 };
 
 // ! //////////////////////////////////////////////////////////////
-export interface FetchImagesProps {
-	breed: string;
-	subBreed: string;
-}
+// export interface FetchImagesProps {
+// 	breed: string;
+// 	subBreed: string;
+// }
 
-export interface Images {
-	image: string;
-	breed: string;
-	subBreed: string;
-	favorite: boolean;
-}
+// export interface Images extends FetchImagesProps {
+// 	image: string;
+// 	favorite: boolean;
+// }
 
 const normalizeString = (str: string) => str.trim().toLowerCase();
 
-const getSubBreedFromUrl = (url: string, subBreeds: string[]) => {
+const getSubBreedFromUrl = (url: DogsBreed.Image['image'], subBreeds: DogsBreed.SubBreed[]) => {
 	const normalizedUrl = normalizeString(url);
 	const foundSubBreed = subBreeds.find(subBreed => normalizedUrl.includes(normalizeString(subBreed)));
 	return foundSubBreed || '';
@@ -67,8 +60,8 @@ const getSubBreedFromUrl = (url: string, subBreeds: string[]) => {
 export const fetchImages = async ({
 	breed,
 	subBreed,
-}: FetchImagesProps): Promise<{ breeds: InitialState['breeds']; breed: string }> => {
-	const cached: InitialState['breeds'] = getCachedData('breeds') || {};
+}: Pick<DogsBreed.Image, 'breed' | 'subBreed'>): Promise<{ breeds: DogsBreed.Breeds; breed: DogsBreed.Breed }> => {
+	const cached: DogsBreed.Breeds = getCachedData('breeds') || {};
 
 	if (cached[breed] && cached[breed].images.length > 0) {
 		return { breeds: cached, breed };
@@ -77,9 +70,9 @@ export const fetchImages = async ({
 	try {
 		const breedPath = subBreed ? `${breed}/${subBreed}` : breed;
 		const response = await fetch(`https://dog.ceo/api/breed/${breedPath}/images`);
-		const data: FetchImages = await response.json();
+		const data: Api.FetchImages = await response.json();
 
-		const updatedImages: Images[] = data.message.map(image => ({
+		const updatedImages: DogsBreed.Image[] = data.message.map(image => ({
 			breed,
 			subBreed: getSubBreedFromUrl(image, cached[breed].subBreeds),
 			image,
@@ -100,8 +93,14 @@ export const fetchImages = async ({
 
 // ! ////////////////////////////////////////////////////////////////////7
 
-export const toggleFavorite = ({ breed, imageUrl }: { breed: string; imageUrl: string }): InitialState['breeds'] => {
-	const cached: InitialState['breeds'] = getCachedData('breeds') || {};
+export const toggleFavorite = ({
+	breed,
+	imageUrl,
+}: {
+	breed: DogsBreed.Breed;
+	imageUrl: DogsBreed.Image['image'];
+}): DogsBreed.Breeds => {
+	const cached: DogsBreed.Breeds = getCachedData('breeds') || {};
 
 	if (!cached[breed]) {
 		throw new Error(`Breed ${breed} not found in cache.`);
@@ -122,10 +121,10 @@ export const toggleFavorite = ({ breed, imageUrl }: { breed: string; imageUrl: s
 
 // ! ////////////////////////////////////////////////////////////////////
 
-export const getAllFavorites = (): Images[] => {
-	const cached: InitialState['breeds'] = getCachedData('breeds') || {};
+export const getAllFavorites = (): DogsBreed.Image[] => {
+	const cached: DogsBreed.Breeds = getCachedData('breeds') || {};
 
-	const favorites: Images[] = [];
+	const favorites: DogsBreed.Image[] = [];
 
 	Object.values(cached).forEach(breedState => {
 		breedState.images.forEach(image => {
@@ -141,7 +140,7 @@ export const getAllFavorites = (): Images[] => {
 export const fetchImagesRandom = async () => {
 	try {
 		const response = await fetch(`https://dog.ceo/api/breeds/image/random`);
-		const data: FetchImagesRandom = await response.json();
+		const data: Api.FetchImagesRandom = await response.json();
 		return data.message;
 	} catch (err) {
 		throw new Error('Failed to load images. Please try again.');

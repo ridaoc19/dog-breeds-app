@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import clean from '../../../assets/clean.svg';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { clearState, postSelectedBreed, selectBreedsState } from '../../../redux/breedsSlice';
+import Svg from '../../icons/Svg';
+import SvgType from '../../icons/svgType';
 
 function BreedSelector() {
 	const [search, setSearch] = useState<string>('');
@@ -38,7 +39,6 @@ function BreedSelector() {
 							setShowDropdown(true);
 						}}
 						onBlur={() => {
-							// Small delay to allow clicking on dropdown item before it hides
 							setTimeout(() => setShowDropdown(false), 100);
 						}}
 						onFocus={() => setShowDropdown(true)}
@@ -47,13 +47,14 @@ function BreedSelector() {
 				</label>
 				<button
 					type='button'
+					aria-label='clean selected'
 					className={`breed-selector__input-button ${showDropdown ? 'open' : ''}`}
 					onClick={() => {
 						setSearch('');
 						dispatch(clearState());
 					}}
 				>
-					<img src={clean} alt='clean' />
+					<Svg type={SvgType.Clean} />
 				</button>
 			</div>
 			<div className='breed-selector__list'>
@@ -62,9 +63,9 @@ function BreedSelector() {
 						{Object.entries(breeds)
 							.filter(([breed]) => breed.toLowerCase().includes(search.toLowerCase()))
 							.map(([breed, values]) => (
-								// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-								<li
+								<button
 									key={breed}
+									type='button'
 									className='breed-selector__list--dropdown-item'
 									onMouseDown={() => {
 										setSearch(breed);
@@ -73,7 +74,7 @@ function BreedSelector() {
 								>
 									<span>{breed}</span>
 									<span>{values.subBreeds.length}</span>
-								</li>
+								</button>
 							))}
 					</ul>
 				)}

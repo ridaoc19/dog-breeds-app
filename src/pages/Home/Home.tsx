@@ -13,7 +13,7 @@ function Home() {
 
 	const title = useMemo<string>(() => {
 		if (isFavorites) return 'Favoritos';
-		if (selectedBreed && !isFavorites) return `${selectedBreed}${selectedSubBreed && `/${selectedSubBreed}`}`;
+		if (selectedBreed && !isFavorites) return `${selectedBreed}${selectedSubBreed && ` / ${selectedSubBreed}`}`;
 		return '';
 	}, [isFavorites, selectedBreed, selectedSubBreed]);
 

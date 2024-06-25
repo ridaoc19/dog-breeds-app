@@ -8,7 +8,6 @@ import { getAllFavorites } from '../../services/api';
 
 export default function usePhotoGallery() {
 	const {
-		// images: imageAll,
 		breeds,
 		isFavorites,
 		selectedBreed,
@@ -52,6 +51,7 @@ export default function usePhotoGallery() {
 			handlePageChange(currentPage - 1);
 		}
 	};
+
 	useEffect(() => {
 		handlePageChange(1);
 	}, [selectedBreed, selectedSubBreed, selectedImageCount, isFavorites]);

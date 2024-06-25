@@ -1,16 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { fetchBreeds, fetchImages, FetchImagesProps, fetchImagesRandom, Images, toggleFavorite } from '../services/api';
+import { fetchBreeds, fetchImages, fetchImagesRandom, toggleFavorite } from '../services/api';
 import createAppSlice from './createAppSlice';
 import type { RootState } from './store';
 
 export interface InitialState {
-	breeds: {
-		[breed: string]: {
-			subBreeds: string[];
-			images: Images[];
-		};
-	};
+	breeds: DogsBreed.Breeds;
 	imageRandom: string[];
 	isFavorites: boolean;
 	selectedBreed: string;
@@ -46,7 +41,7 @@ export const breedsSlice = createAppSlice({
 			state.isFavorites = true;
 		}),
 		postSelectedSubBreed: create.reducer(
-			(state, { payload: { breed, subBreed } }: PayloadAction<{ breed: string; subBreed: string }>) => {
+			(state, { payload: { breed, subBreed } }: PayloadAction<Pick<DogsBreed.Image, 'breed' | 'subBreed'>>) => {
 				const filterImages = state.breeds[breed].images.filter(({ image }) => image.includes(subBreed));
 				state.selectedImageCount = filterImages.length;
 				state.selectedSubBreed = subBreed;
@@ -56,7 +51,10 @@ export const breedsSlice = createAppSlice({
 			state.selectedImageCount = action.payload;
 		}),
 		updateToggleFavorite: create.reducer(
-			(state, { payload: { breed, imageUrl } }: PayloadAction<{ breed: string; imageUrl: string }>) => {
+			(
+				state,
+				{ payload: { breed, imageUrl } }: PayloadAction<{ breed: DogsBreed.Breed; imageUrl: DogsBreed.Image['image'] }>
+			) => {
 				state.breeds = toggleFavorite({ breed, imageUrl });
 			}
 		),
@@ -86,7 +84,7 @@ export const breedsSlice = createAppSlice({
 			}
 		),
 		postSelectedBreed: create.asyncThunk(
-			async ({ breed, subBreed }: FetchImagesProps) => {
+			async ({ breed, subBreed }: Pick<DogsBreed.Image, 'breed' | 'subBreed'>) => {
 				const response = await fetchImages({ breed, subBreed });
 				return response;
 			},

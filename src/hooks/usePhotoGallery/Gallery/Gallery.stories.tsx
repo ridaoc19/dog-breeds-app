@@ -23,7 +23,7 @@ function GalleryDocumentation() {
 					<strong>images</strong>: Un array de URLs de las imágenes que se mostrarán en la galería.
 				</li>
 				<li>
-					<strong>isRandom</strong>: Un booleano que indica si las imágenes son aleatorias.
+					<strong>isFavorite</strong>: Un booleano que indica si las imágenes serán de una búsqueda o de favoritos.
 				</li>
 			</ul>
 
@@ -89,7 +89,7 @@ const meta: Meta<typeof Gallery> = {
 	argTypes: {
 		isLoading: { control: 'boolean' },
 		images: { control: 'object' },
-		isRandom: { control: 'boolean' },
+		isFavorite: { control: 'boolean' },
 	},
 };
 
@@ -101,7 +101,7 @@ export const Gallerys: Story = {
 	args: {
 		isLoading: false,
 		images,
-		isRandom: false,
+		isFavorite: false,
 	},
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);

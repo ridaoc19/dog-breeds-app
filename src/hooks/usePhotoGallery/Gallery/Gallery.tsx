@@ -1,8 +1,16 @@
 import Card from '../../../components/Card/Card';
 import Loading from '../../../components/Loading/Loading';
-import { Images } from '../../../services/api';
+import { InitialState } from '../../../redux/breedsSlice';
 
-function Gallery({ isLoading, images, isFavorite }: { isLoading: boolean; images: Images[]; isFavorite: boolean }) {
+function Gallery({
+	isLoading,
+	images,
+	isFavorite,
+}: {
+	isLoading: InitialState['status']['isLoading'];
+	images: DogsBreed.Image[];
+	isFavorite: InitialState['isFavorites'];
+}) {
 	return (
 		<div className={`gallery ${images.length === 1 ? 'random' : ''}`} data-testid='gallery'>
 			{isLoading ? (

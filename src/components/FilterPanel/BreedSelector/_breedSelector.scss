@@ -23,7 +23,7 @@
 
 		&-button {
 			background-color: transparent;
-			height: 34px;
+			height: 33px;
 			align-self: flex-end;
 			border: 1px solid var(--base-border);
 			cursor: pointer;
@@ -54,12 +54,16 @@
 			margin-top: 0;
 			list-style: none;
 			padding: 0;
+			display: flex;
+			flex-direction: column;
 
 			&-item {
+				all: unset;
 				padding: 0.5rem;
 				cursor: pointer;
 				display: flex;
 				justify-content: space-between;
+				font-size: small;
 
 				&:hover {
 					background-color: var(--base-yellow);

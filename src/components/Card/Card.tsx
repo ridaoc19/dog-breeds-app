@@ -1,13 +1,12 @@
 import useAppDispatch from '../../hooks/useAppDispatch';
-import { updateToggleFavorite } from '../../redux/breedsSlice';
-import { Images } from '../../services/api';
+import { InitialState, updateToggleFavorite } from '../../redux/breedsSlice';
 import Svg from '../icons/Svg';
 import SvgType from '../icons/svgType';
 
 interface CardProps {
-	image: Images;
+	image: DogsBreed.Image;
 	altText: string;
-	isFavorite: boolean;
+	isFavorite: InitialState['isFavorites'];
 }
 
 function Card({ image: { image, breed, favorite, subBreed }, altText, isFavorite }: CardProps) {

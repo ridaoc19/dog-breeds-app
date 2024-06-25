@@ -39,7 +39,7 @@ Trabajar con "React" y aplicar todo lo que se consideres oportuno.
 	"devDependencies": {
 		"@storybook/test": "^8.1.10",
 		"@storybook/test-runner": "^0.18.2",
-	    "eslint": "^8.57.0",
+	  "eslint": "^8.57.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-airbnb-typescript": "^18.0.0",
 		"prettier": "^3.3.2",
@@ -101,6 +101,40 @@ npm run lint
 ```bash
 npm run format
 ```
+
+## Imágenes (Aplicación responsiva)
+
+Vista Favoritos
+
+Al ingresar a la página, encontrarás el título "Favoritos". Sin embargo, el campo donde se renderizan las tarjetas con la foto estará vacío ya que es la primera vez que ingresas (Las tarjetas en favoritos muestran la raza y la subraza). Para que esto no suceda, debe agregar razas a favoritos después de realizar una búsqueda.
+
+### Favoritos Desktop
+
+<center><img src='./src/assets/Home-Favoritos.png' alt='favoritos'/></center>
+
+### Favoritos Phone
+
+<center><img src='./src/assets/Home-Favoritos-phone.jpeg' alt='favoritos-phone'/></center>
+
+Vista de Búsqueda
+
+- Raza: La vista de búsqueda se inicia con la raza seleccionada. Si la raza tiene subrazas, podrás ver un select habilitado para elegir la subraza correspondiente.
+- Validación y Ajustes: La aplicación valida y ajusta el número de fotos disponibles según la raza seleccionada. Esto permite tanto aumentar como reducir el número de imágenes mostradas.
+- Select de Razas: En el selector de razas, verás el nombre de cada raza acompañado por un número. Este número indica la cantidad de subrazas disponibles para esa raza.
+
+### Búsqueda Desktop
+
+<center><img src='./src/assets/Home-Busqueda.png' alt='busca'/></center>
+
+### Búsqueda phone
+
+<center><img src='./src/assets/Home-Busqueda-phone.jpeg' alt='busca-phone'/></center>
+
+### StoryBook
+
+Se puede observar todos los componentes, documentación y test de manera individual
+
+<center><img src='./src/assets/storybook.png' alt='storybook'/></center>
 
 Este proyecto fue desarrollado por **Ricardo David Ocampo**.
 
